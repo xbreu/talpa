@@ -20,7 +20,7 @@ print_middle_matrix([H|T]) :-
 
 print_columns(0, S) :- !,
 	new_line,
-    vertical,
+    left_intersection,
     print_middle_line(S).
 print_columns(N, 0) :- !,
     print_cell(' '),
@@ -111,9 +111,17 @@ print_last_line(X) :-
 %	Cells
 % -----------------------------------------------
 print_cell(C) :-
+	number(C),
+	C > 9, !,
 	padding,
-	write(C),
+	Code is C + 55,
+	char_code(Char,Code),
+	write(Char),
 	padding.
+print_cell(C) :-
+    padding,
+    write(C),
+    padding.
 
 % -----------------------------------------------
 %	Auxiliary Functions
