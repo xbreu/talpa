@@ -1,8 +1,6 @@
 # Talpa
 Talpa ("mole" in Latin), by Arty Sandler (a.k.a. Artyom Tchebotaryov), is a member of the connection game family.
 
-The goal of Talpa is to open a path of orthogonally connected empty spaces linking the opposite edges of the board marked by your color without opening a similar path between your opponent's edges. 
-
 ## Setup
 Talpa is played on an 8x8 board. The inner smaller board (6x6) can also be used by beginners or for quick games.
 
