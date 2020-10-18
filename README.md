@@ -1,5 +1,5 @@
 # Talpa
-Talpa ("mole" in Latin), by Arty Sandler (a.k.a. Artyom Tchebotaryov), is a member of the connection game family.
+Talpa ("mole" in Latin), by (http://www.iggamecenter.com/info/en/about.html)[Arty Sandler] (a.k.a. Artyom Tchebotaryov), is a member of the connection game family.
 
 ## Setup
 Talpa is played on an 8x8 board. The inner smaller board (6x6) can also be used by beginners or for quick games.
