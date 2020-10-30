@@ -1,16 +1,18 @@
 :- include('print.pl'). 
-:- include('initial.pl'). 
+:- include('initial.pl').  
+:- include('utils.pl').  
+:- include('move.pl'). 
 
 % -----------------------------------------------
 %	Display game 
 % ----------------------------------------------- 
 
-display_game(S, P):-    
-	print_matrix(S).     
+display_game(GameState, Player):-     
+	print_matrix(GameState).     
 
-display_init:- 
-	initial(S),
-	display_game(S, 1).
+play:- 
+	initial(GameState),  
+	display_game(GameState, 1).
 
 
 

@@ -9,7 +9,8 @@ padding_size(1).
 print_middle_matrix([H|[]]) :- !,
 	vertical,
     print_cell(1),
-    print_last_row(H).
+    print_last_row(H). 
+
 print_middle_matrix([H|T]) :-
 	vertical,
 	len(T, L),
@@ -21,12 +22,14 @@ print_middle_matrix([H|T]) :-
 print_columns(0, S) :- !,
 	new_line,
     left_intersection,
-    print_middle_line(S).
+    print_middle_line(S). 
+
 print_columns(N, 0) :- !,
     print_cell(' '),
     vertical,
     N1 is N - 1,
-    print_columns(N1, 1).
+    print_columns(N1, 1). 
+
 print_columns(N, S) :-
 	Code is S + 96,
 	char_code(C, Code),
@@ -34,11 +37,13 @@ print_columns(N, S) :-
     vertical,
     N1 is N - 1,
     S1 is S + 1,
-    print_columns(N1, S1).
+    print_columns(N1, S1). 
+
 print_columns(N) :-
 	print_columns(N, 0).
 
-print_matrix([]).
+print_matrix([]). 
+
 print_matrix([H|T]) :-
 	top_left_intersection,
     len(H, L),
@@ -53,7 +58,8 @@ print_matrix([H|T]) :-
 % -----------------------------------------------
 print_row([]) :-
 	vertical,
-	new_line.
+	new_line. 
+
 print_row([H|T]) :-
 	vertical,
 	code(H,C),
@@ -80,7 +86,8 @@ print_last_row(R) :-
 print_first_line(1) :- !,
 	print_horizontal,
 	top_right_intersection,
-	new_line.
+	new_line. 
+
 print_first_line(X) :-
 	print_horizontal,
 	top_intersection,
@@ -90,7 +97,8 @@ print_first_line(X) :-
 print_middle_line(1) :- !,
 	print_horizontal,
 	right_intersection,
-	new_line.
+	new_line. 
+
 print_middle_line(X) :-
 	print_horizontal,
 	intersection,

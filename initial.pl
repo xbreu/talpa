@@ -1,9 +1,12 @@
 % ----------------------------------------------- 
 % 	Init game 	
 % -----------------------------------------------
+/**
+ * @brief: to change the size of the board, change the values of this function
+ */ 
+initial(GameState):- 
+	initial(GameState, 5, 5).
 
-initial(State):- 
-	initial(State, 5, 5).
 
 initial([Line|State], R, C):-     
 	R > 0, 
