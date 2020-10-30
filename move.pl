@@ -40,6 +40,10 @@ printPlayerTurn(Player):-
 	write(' turn--'), 
 	nl, nl.
 
+% -----------------------------------------------
+%	Input validation 
+% -----------------------------------------------
+
 
 validateLine(GameState, Line, Valid):-  
 	boardNumLines(GameState, NumLines),
@@ -50,6 +54,13 @@ validateLine(GameState, Line, Valid):-
 	Valid is 1. 
 
 
+validateCol(GameState, Col, Valid):-  
+	boardNumCols(GameState, NumCols),
+	(Col =< 0; Col > NumCols), !, 
+   	Valid is 0. 
+
+validateCol(GameState, Col, Valid):-  
+	Valid is 1. 
 
 
 
