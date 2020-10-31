@@ -32,35 +32,41 @@ getValidInput(GameState, Player, Line, Col):-
 
 
 auxGetValidInput(GameState, Player, Line, Col, RealLine, RealCol):-
-	\+validatePos(GameState, RealLine, RealCol), !,
+	\+validatePos(GameState, RealLine, RealCol), !,  
+	nl, 
+	print('MOVE NOT VALID'),
+	nl,
 	getValidInput(GameState, Player, Line, Col).   
 
-auxGetValidInput(GameState, Player, Line, Col, Line, Col):- 
+auxGetValidInput(GameState, Player, Line, Col, Line, Col):-  
 	validatePos(GameState, Line, Col).
-
-	
+ 
 
 /**
  * @brief: Get the line and column as input.  
  */ 
 getMoveInput(Player, Line, Col):-       
-	printPlayerTurn(Player), 
-	write('LINE>> '),  
+	printPlayerTurn(Player),  
+	getMoveLine(Line), 
+	getMoveCol(Col).
+	
+getMoveLine(Line):- 
+	print('LINE>> '),  
 	get_char(Line1),      
-	get_char(_), 	% get's the \n character
-	write('COL>> '), 
-	get_char(Col),   
-   	get_char(_),	  
-
+	get_char(_), 				% get's the \n character   
 	char_code(Line1, CodeLine), 
-	Line is CodeLine - 48. 
+	Line is CodeLine - 48.    
 
-printPlayerTurn(Player):-  
-	nl, nl,
-	write('--Player '), 
-	write(Player),
-	write(' turn--'), 
-	nl, nl.
+getMoveCol(Col):- 
+	print('COL>> '), 
+	get_char(Col),    
+	get_char(_). 				% get's the \n character   
+
+
+printPlayerTurn(Player):-   
+	nl,
+	format('--Player ~d turn--', Player),  
+	nl.
 
 % -----------------------------------------------
 %	Input validation 
