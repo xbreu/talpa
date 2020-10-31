@@ -1,12 +1,12 @@
 % ----------------------------------------------- 
 % 	Init game 	
 % -----------------------------------------------
-
-/** 
- * @brief: Funtion that returns the intial game state. 
+/**
+ * @brief: to change the size of the board, change the values of this function
  */ 
-initial(State):- 
-	initial(State, 5, 5).
+initial(GameState):- 
+	initial(GameState, 5, 5).
+
 
 /**
  * @param R: Number of rows in the game. 
