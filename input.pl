@@ -52,15 +52,15 @@ getMoveInput(Player, Line, Col):-
 	
 getMoveLine(Line):- 
 	print('LINE>> '),  
-	get_char(Line1),      
-	get_char(_), 				% get's the \n character   
+	get_char(Line1),       
+	skip_line,
 	char_code(Line1, CodeLine), 
 	Line is CodeLine - 48.    
 
 getMoveCol(Col):- 
 	print('COL>> '), 
-	get_char(Col),    
-	get_char(_). 				% get's the \n character   
+	get_char(Col),     
+	skip_line. 
 
 
 printPlayerTurn(Player):-   
