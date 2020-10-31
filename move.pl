@@ -2,11 +2,15 @@
 
 
 
+getRealInput(GameState, Line, Col, RealLine, RealCol):-
+	getRealLine(GameState, Line, RealLine), 
+	getRealCol(Col, RealCol).
+
 /** 
  * @brief: Convert input line to list position 
  */
 getRealLine(GameState, Line, RealLine):-  
-	boardNumLines(GameState, NumLines), 
+	getBoardNumLines(GameState, NumLines), 
 	RealLine is NumLines - Line. 
 
 /**
@@ -21,17 +25,35 @@ getRealCol(Col, RealCol):-
 %	Input 	
 % -----------------------------------------------
 
+getValidInput(GameState, Player, Line, Col):-
+	getMoveInput(Player, InputLine, InputCol),  
+	getRealInput(GameState, InputLine, InputCol, RealLine, RealCol),    
+	auxGetValidInput(GameState, Player, Line, Col, RealLine, RealCol). 
+
+
+auxGetValidInput(GameState, Player, Line, Col, RealLine, RealCol):-
+	\+validatePos(GameState, RealLine, RealCol), !,
+	getValidInput(GameState, Player, Line, Col).   
+
+auxGetValidInput(GameState, Player, Line, Col, Line, Col):- 
+	validatePos(GameState, Line, Col).
+
+	
+
 /**
- * @brief: Get the line and Col from the user
+ * @brief: Get the line and column as input.  
  */ 
-getInputMove(Player, Line, Col):-       
+getMoveInput(Player, Line, Col):-       
 	printPlayerTurn(Player), 
-	write('LINE >> '), 
-	get_code(Line1),      
-	get_char(_),
-	write('COL >> '),  
-	get_char(Col),
-	Line is Line1 - 48. 
+	write('LINE>> '),  
+	get_char(Line1),      
+	get_char(_), 	% get's the \n character
+	write('COL>> '), 
+	get_char(Col),   
+   	get_char(_),	  
+
+	char_code(Line1, CodeLine), 
+	Line is CodeLine - 48. 
 
 printPlayerTurn(Player):-  
 	nl, nl,
@@ -44,23 +66,19 @@ printPlayerTurn(Player):-
 %	Input validation 
 % -----------------------------------------------
 
+validatePos(GameState, Line, Col):-
+	validateLine(GameState, Line),
+	validateCol(GameState, Col).   
 
-validateLine(GameState, Line, Valid):-  
-	boardNumLines(GameState, NumLines),
-	(Line =< 0; Line > NumLines), !, 
-   	Valid is 0. 
-
-validateLine(GameState, Line, Valid):-  
-	Valid is 1. 
+validateLine(GameState, Line):-  
+	getBoardNumLines(GameState, NumLines),
+	Line >= 0, Line < NumLines. 
 
 
-validateCol(GameState, Col, Valid):-  
-	boardNumCols(GameState, NumCols),
-	(Col =< 0; Col > NumCols), !, 
-   	Valid is 0. 
+validateCol(GameState, Col):-  
+	getBoardNumCols(GameState, NumCols), 
+	Col >= 0, Col < NumCols.
 
-validateCol(GameState, Col, Valid):-  
-	Valid is 1. 
 
 
 
