@@ -5,39 +5,11 @@ padding_size(1).
 
 % -----------------------------------------------
 %	Matrix
-% -----------------------------------------------
-print_middle_matrix([H|[]]) :- !,
-	vertical,
-    print_cell(1),
-    print_last_row(H).
-print_middle_matrix([H|T]) :-
-	vertical,
-	len(T, L),
-	S is L + 1,
-    print_cell(S),
-	print_middle_row(H),
-	print_middle_matrix(T).
+% -----------------------------------------------   
 
-print_columns(0, S) :- !,
-	new_line,
-    left_intersection,
-    print_middle_line(S).
-print_columns(N, 0) :- !,
-    print_cell(' '),
-    vertical,
-    N1 is N - 1,
-    print_columns(N1, 1).
-print_columns(N, S) :-
-	Code is S + 96,
-	char_code(C, Code),
-    print_cell(C),
-    vertical,
-    N1 is N - 1,
-    S1 is S + 1,
-    print_columns(N1, S1).
-print_columns(N) :-
-	print_columns(N, 0).
-
+/**
+ * @brief: main function to print the matrix. 
+ */ 
 print_matrix([]).
 print_matrix([H|T]) :-
 	top_left_intersection,
@@ -48,9 +20,56 @@ print_matrix([H|T]) :-
     print_columns(S),
     print_middle_matrix([H|T]).
 
+ 
+/**
+ * @brief: Print the column names (e.g a,b,c,...) of the first row.  
+ * @param S: Current cell number.  
+ * @param N: Number of cells that are still to be processed. 
+ */ 
+print_columns(0, S) :- !,
+	new_line,
+    left_intersection,
+    print_middle_line(S). 
+
+print_columns(N, 0) :- !,
+    print_cell(' '),
+    vertical,
+    N1 is N - 1,
+    print_columns(N1, 1). 
+
+print_columns(N, S) :-
+	Code is S + 96,
+	char_code(C, Code),
+    print_cell(C),
+    vertical,
+    N1 is N - 1,
+    S1 is S + 1,
+    print_columns(N1, S1). 
+
+print_columns(N) :-
+	print_columns(N, 0).
+
+
+/**
+ * @brief: Function that prints the matrix of the game except for the first row.  
+ */ 
+print_middle_matrix([H|[]]) :- !,
+	vertical,
+    print_cell(1),
+    print_last_row(H). 
+
+print_middle_matrix([H|T]) :-
+	vertical,
+	len(T, L),
+	S is L + 1,
+    print_cell(S),
+	print_middle_row(H),
+	print_middle_matrix(T). 
+
 % -----------------------------------------------
 %	Rows
-% -----------------------------------------------
+% ----------------------------------------------- 
+
 print_row([]) :-
 	vertical,
 	new_line.
