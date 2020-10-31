@@ -28,15 +28,15 @@ __Nota__: As peças do tabuleiro não precisam ser necessariamente pretas e bran
 
 ### Estados possíveis de jogo:
 - Inicial:   
-![](https://i.imgur.com/nikdIBR.png)   
+![](/img/initial.png)   
 
 
 - Intermédio:   
-![](https://i.imgur.com/S6i2RDN.png)  
+![](/img/middle.png)  
 
 
 - Final:   
-![](https://i.imgur.com/VY4Aj3J.png)  
+![](/img/end.png)  
 
 ## Visualização do estado do jogo
 Para a explicação da visualização do jogo é preciso ter em mente a existência das seguintes funções principais: 
