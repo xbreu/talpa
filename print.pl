@@ -72,7 +72,8 @@ print_middle_matrix([H|T]) :-
 
 print_row([]) :-
 	vertical,
-	new_line.
+	new_line. 
+
 print_row([H|T]) :-
 	vertical,
 	code(H,C),
@@ -99,7 +100,8 @@ print_last_row(R) :-
 print_first_line(1) :- !,
 	print_horizontal,
 	top_right_intersection,
-	new_line.
+	new_line. 
+
 print_first_line(X) :-
 	print_horizontal,
 	top_intersection,
@@ -109,7 +111,8 @@ print_first_line(X) :-
 print_middle_line(1) :- !,
 	print_horizontal,
 	right_intersection,
-	new_line.
+	new_line. 
+
 print_middle_line(X) :-
 	print_horizontal,
 	intersection,
