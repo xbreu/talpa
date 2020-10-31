@@ -40,10 +40,12 @@ __Nota__: As peças do tabuleiro não precisam ser necessariamente pretas e bran
 
 ## Visualização do estado do jogo
 Para a explicação da visualização do jogo é preciso ter em mente a existência das seguintes funções principais: 
+- print_matrix  
 - print_columns  
 - print_middle_matrix  
 - print_last_row  
 
+A função principal é a `print_matrix` que encarrega-se de chamar todas as outras funções.  
 Para desenhar a primeira linha é preciso chamar a função `print_columns` que irá se encarregar de imprimir as letras correspondentes às colunas.  
 Em seguida, a função `print_middle_matrix` irá imprimir o resto da matriz começando pelo número da linha seguido da posição das peças (de cada célula) da linha em questão.  
 Ao chegar na última linha a ser impressa a função `print_middle_matrix` irá chamar a função `print_last_row` que irá printar os elementos e a borda inferior do tabuleiro.  
