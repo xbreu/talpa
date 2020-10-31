@@ -151,7 +151,7 @@ print_horizontal :-
 %	Characters
 % -----------------------------------------------
 code(0,' ').
-code(1,'\x1F7AE\').
+code(1,'\x00445\').
 code(2,'\x25CF\').
 vertical :-
 	write('\x2502\').
