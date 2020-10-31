@@ -2,21 +2,28 @@
 % 	Init game 	
 % -----------------------------------------------
 
+/** 
+ * @brief: Funtion that returns the intial game state. 
+ */ 
 initial(State):- 
 	initial(State, 5, 5).
 
+/**
+ * @param R: Number of rows in the game. 
+ * @param C: Number of columns. 
+ */
 initial([Line|State], R, C):-     
 	R > 0, 
 	0 is mod(R,2),  
 	R1 is R-1,  
-	build_line_p1(Line, C),  
+	build_line_p1(Line, C),		% Line starting with the player 1  
 	initial(State, R1, C). 
-	
+
 initial([Line|State], R, C):-   
 	R > 0, 
 	1 is mod(R,2), 
 	R1 is R-1, 
-	build_line_p2(Line,C), 
+	build_line_p2(Line,C), 		% Line starting with the player 2
 	initial(State, R1, C). 
 
 initial([], 0, C). 
@@ -47,8 +54,14 @@ build_line_p2([],0).
 % 	Get the value for specific line 
 % -----------------------------------------------   
 
+/**
+ * @brief: These are functions to understand what should be the current value to be displayed in the list 
+ * @param N: Number of the column.  
+ * @param X: Player to be displayed. 
+ */  
+
 get_element_p1(X, N):-     
-	0 is mod(N, 2), 
+	0 is mod(N, 2),  	
 	X is 1. 
 	
 get_element_p1(X, N):-  
