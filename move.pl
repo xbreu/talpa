@@ -10,7 +10,7 @@ move(GameState, [Line-Col, Letter], NewGameState):-
 	validCapture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),    
 	getValueInMatrix(GameState, RealLine, RealCol, CellCurrValue), 
 	replaceInMatrix(GameState, RealLine-RealCol, 0, CurrGameState), 
-	replaceInMatrix(GameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
+	replaceInMatrix(CurrGameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
 
 
 	

@@ -17,7 +17,7 @@ play:-
 
 % Representation of begin, intermediate and end final game. 
 % This representations are merly symbolic. 
-intial_state:- 
+initial_state:- 
 	nl,
 	format('-- Turn of player ~d --', 1), 
 	nl,
