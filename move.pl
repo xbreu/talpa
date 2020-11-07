@@ -4,11 +4,9 @@
 % 	Init game 	
 % ----------------------------------------------- 
 
-move(GameState, [RealLine-RealCol, Letter], NewGameState):-   
+move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,  
 	validPos(GameState, RealLine, RealCol),  
 	validCapture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),    
-	print(CaptureLine), 
-	print(CaptureCol),
 	getValueInMatrix(GameState, RealLine, RealCol, CellCurrValue), 
 	replaceInMatrix(GameState, RealLine-RealCol, 0, CurrGameState), 
 	replaceInMatrix(CurrGameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
@@ -19,25 +17,31 @@ move(GameState, [RealLine-RealCol, Letter], NewGameState):-
 % 	Make movement functions
 % ----------------------------------------------- 
 
+replaceInMatrix([L|GameState], 0-Col, NewValue, [NewL|GameState]):- !, 
+	replaceInList(L, Col, NewValue, NewL). 
 
-	
 replaceInMatrix([L|GameState], Line-Col, NewValue, [L|NewGameState]):- 
 	NewLine is Line -1,  
+	NewLine >= 0,
 	replaceInMatrix(GameState, NewLine-Col, NewValue, NewGameState).
 
-replaceInMatrix([L|GameState], 0-Col, NewValue, [NewL|GameState]):-
-	replaceInList(L, Col, NewValue, NewL). 
+
+	
 
 
 /**
  * @brief: Replaces an element from [L|List] in position Pos  
  * for a new value called NewValue.
  */ 
-replaceInList([L|List], Pos, NewValue, [L|NewList]):-  
+
+replaceInList([_|List], 0, NewValue, [NewValue|List]). 
+
+replaceInList([L|List], Pos, NewValue, [L|NewList]):- !,
 	AuxPos is Pos- 1, 
+	AuxPos >= 0,
 	replaceInList(List, AuxPos, NewValue, NewList). 
 
-replaceInList([_|List], 0, NewValue, [NewValue|List]).  
+ 
 
 
 % -----------------------------------------------
@@ -45,16 +49,16 @@ replaceInList([_|List], 0, NewValue, [NewValue|List]).
 % -----------------------------------------------
 
 
-validPos(GameState, Line, Col):-
+validPos(GameState, Line, Col):- !,
 	validLine(GameState, Line),
 	validCol(GameState, Col).   
 
-validLine(GameState, Line):-  
+validLine(GameState, Line):- !,
 	getBoardNumLines(GameState, NumLines),
 	Line >= 0, Line < NumLines. 
 
 
-validCol(GameState, Col):-  
+validCol(GameState, Col):- !,
 	getBoardNumCols(GameState, NumCols), 
 	Col >= 0, Col < NumCols.
  
@@ -86,7 +90,7 @@ validCapture(GameState, 'a', Line, Col, Line, NewCol):- !,
 	distinctPlayer(GameState, Line, Col, Line, NewCol). 
 
 
-distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):-
+distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):- !,
 	getValueInMatrix(GameState, Line, Col, ActualPlayer),
 	getValueInMatrix(GameState, CaptureLine, CaptureCol, CapturedPlayer), 
 	ActualPlayer \= CapturedPlayer, 
