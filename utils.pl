@@ -2,7 +2,7 @@
  
 
 
-getBoardNumCols([X|GameState], Cols):- 
+getBoardNumCols([X|_], Cols):- 
 	length(X, Cols).  
 
 getBoardNumLines([X|GameState], Lines):-  
