@@ -4,10 +4,11 @@
 % 	Init game 	
 % ----------------------------------------------- 
 
-move(GameState, [Line-Col, Letter], NewGameState):-   
-	getRealInput(GameState, Line, Col, RealLine, RealCol),
+move(GameState, [RealLine-RealCol, Letter], NewGameState):-   
 	validPos(GameState, RealLine, RealCol),  
 	validCapture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),    
+	print(CaptureLine), 
+	print(CaptureCol),
 	getValueInMatrix(GameState, RealLine, RealCol, CellCurrValue), 
 	replaceInMatrix(GameState, RealLine-RealCol, 0, CurrGameState), 
 	replaceInMatrix(CurrGameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
@@ -18,9 +19,6 @@ move(GameState, [Line-Col, Letter], NewGameState):-
 % 	Make movement functions
 % ----------------------------------------------- 
 
-getValueInMatrix(GameState, Line, Col, Value):-   
-	nth0(Line, GameState, L), 
-	nth0(Col, L, Value).
 
 	
 replaceInMatrix([L|GameState], Line-Col, NewValue, [L|NewGameState]):- 
@@ -67,41 +65,32 @@ validCol(GameState, Col):-
 
 
 validCapture(GameState, 'w', Line, Col, NewLine, Col):-  !,  
-	NewLine is Line +1, 
-	validLine(GameState, NewLine).   
+	NewLine is Line -1, 
+	validLine(GameState, NewLine),
+	distinctPlayer(GameState, Line, Col, NewLine, Col).
+	
 
 validCapture(GameState, 's', Line, Col, NewLine, Col):-  !,  
-	NewLine is Line -1, 
-	validLine(GameState, NewLine). 
+	NewLine is Line +1, 
+	validLine(GameState, NewLine),
+	distinctPlayer(GameState, Line, Col, NewLine, Col). 
 
 validCapture(GameState, 'd', Line, Col, Line, NewCol):- !, 
 	NewCol is Col +1, 
-	validCol(GameState, NewCol).  
+	validCol(GameState, NewCol),
+	distinctPlayer(GameState, Line, Col, Line, NewCol).  
 
 validCapture(GameState, 'a', Line, Col, Line, NewCol):- !, 
 	NewCol is Col -1, 
-	validCol(GameState, NewCol). 
+	validCol(GameState, NewCol),
+	distinctPlayer(GameState, Line, Col, Line, NewCol). 
 
-% -----------------------------------------------
-%	Get Real Input 	
-% -----------------------------------------------
 
-getRealInput(GameState, Line, Col, RealLine, RealCol):-
-	getRealLine(GameState, Line, RealLine), 
-	getRealCol(Col, RealCol).
-
-/** 
- * @brief: Convert input line to list position 
- */
-getRealLine(GameState, Line, RealLine):-  
-	getBoardNumLines(GameState, NumLines), 
-	RealLine is NumLines - Line. 
-
-/**
- * @brief: Convert input column to list position 
- */ 
-getRealCol(Col, RealCol):-
-	char_code(Col, X),    
-	RealCol is X-97. 
-
+distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):-
+	getValueInMatrix(GameState, Line, Col, ActualPlayer),
+	getValueInMatrix(GameState, CaptureLine, CaptureCol, CapturedPlayer), 
+	ActualPlayer \= CapturedPlayer, 
+	ActualPlayer \= 0,
+	CapturedPlayer\= 0.  
+	
 

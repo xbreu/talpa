@@ -2,6 +2,7 @@
 :- include('initial.pl').  
 :- include('utils.pl').  
 :- include('move.pl'). 
+:- include('valid_moves.pl'). 
 
 % -----------------------------------------------
 %	Display game 

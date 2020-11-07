@@ -39,3 +39,25 @@ getMoveInput(Letter):-
 	get_char(Letter),
 	skip_line. 
 
+
+% -----------------------------------------------
+%	Get Real Input 	
+% -----------------------------------------------
+
+getRealInput(GameState, Line, Col, RealLine, RealCol):-
+	getRealLine(GameState, Line, RealLine), 
+	getRealCol(Col, RealCol).
+
+/** 
+ * @brief: Convert input line to list position 
+ */
+getRealLine(GameState, Line, RealLine):-  
+	getBoardNumLines(GameState, NumLines), 
+	RealLine is NumLines - Line. 
+
+/**
+ * @brief: Convert input column to list position 
+ */ 
+getRealCol(Col, RealCol):-
+	char_code(Col, X),    
+	RealCol is X-97. 
