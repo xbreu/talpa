@@ -9,8 +9,8 @@
  */ 
 getCellInput(Player, Line, Col):-       
 	printPlayerTurn(Player),  
-	getMoveLine(Line), 
-	getMoveCol(Col).
+	getCellLine(Line), 
+	getCellCol(Col).
 	
 getCellLine(Line):- 
 	print('LINE>> '),  

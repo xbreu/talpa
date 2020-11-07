@@ -39,7 +39,7 @@ replaceInList([L|List], Pos, NewValue, [L|NewList]):-
 	AuxPos is Pos- 1, 
 	replaceInList(List, AuxPos, NewValue, NewList). 
 
-replaceInList([L|List], 0, NewValue, [NewValue|List]).  
+replaceInList([_|List], 0, NewValue, [NewValue|List]).  
 
 
 % -----------------------------------------------

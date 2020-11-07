@@ -26,7 +26,7 @@ initial([Line|State], R, C):-
 	build_line_p2(Line,C), 		% Line starting with the player 2
 	initial(State, R1, C). 
 
-initial([], 0, C). 
+initial([], 0, _). 
 
 % ----------------------------------------------- 
 % 	Build Lines 	
