@@ -20,7 +20,7 @@ move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,
 replaceInMatrix([L|GameState], 0-Col, NewValue, [NewL|GameState]):- !, 
 	replaceInList(L, Col, NewValue, NewL). 
 
-replaceInMatrix([L|GameState], Line-Col, NewValue, [L|NewGameState]):- 
+replaceInMatrix([L|GameState], Line-Col, NewValue, [L|NewGameState]):- !,
 	NewLine is Line -1,  
 	NewLine >= 0,
 	replaceInMatrix(GameState, NewLine-Col, NewValue, NewGameState).
