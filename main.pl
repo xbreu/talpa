@@ -1,8 +1,8 @@
-:- include('print.pl'). 
-:- include('initial.pl').  
-:- include('utils.pl').  
-:- include('move.pl'). 
-:- include('valid_moves.pl'). 
+:- consult('print.pl'). 
+:- consult('initial.pl').  
+:- consult('utils.pl').  
+:- consult('move.pl'). 
+:- consult('valid_moves.pl'). 
 
 % -----------------------------------------------
 %	Display game 
@@ -16,8 +16,8 @@ play:-
 	display_game(GameState, 1).
 
 
-% Representation of begin, intermediate and end final game. 
-% This representations are merly symbolic. 
+
+
 initial_state:- 
 	nl,
 	format('-- Turn of player ~d --', 1), 

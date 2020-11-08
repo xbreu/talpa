@@ -1,6 +1,3 @@
-% -----------------------------------------------
-%	Variables
-% -----------------------------------------------
 padding_size(1).
 
 % -----------------------------------------------
@@ -8,8 +5,8 @@ padding_size(1).
 % -----------------------------------------------   
 
 /**
- * @brief: main function to print the matrix. 
- */ 
+ Main function to print the matrix. 
+*/ 
 print_matrix([]).
 print_matrix([H|T]) :-
 	top_left_intersection,
@@ -22,9 +19,11 @@ print_matrix([H|T]) :-
 
  
 /**
- * @brief: Print the column names (e.g a,b,c,...) of the first row.  
- * @param S: Current cell number.  
- * @param N: Number of cells that are still to be processed. 
+ Print the column names (e.g a,b,c,...) of the first row.  
+
+ print_columns(+N, -S). 
+ +N: Number of cells that are still to be processed. 
+ -S: Current cell number.  
  */ 
 print_columns(0, S) :- !,
 	new_line,
@@ -51,7 +50,7 @@ print_columns(N) :-
 
 
 /**
- * @brief: Function that prints the matrix of the game except for the first row.  
+ * Function that prints the matrix of the game except for the first row.  
  */ 
 print_middle_matrix([H|[]]) :- !,
 	vertical,

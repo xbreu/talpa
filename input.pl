@@ -1,11 +1,17 @@
-:- include('utils.pl'). 
+:- consult('utils.pl'). 
+:- consult('singleton.pl').
 
 % -----------------------------------------------
-%	Input of actual cell 
+% Input of actual cell 
 % ----------------------------------------------- 
 
 /**
- * @brief: Get the line and column as input.  
+ Get the line and column as input of determine player.  
+
+ getCellInput(+Player, -Line, -Col). 
+ +Player 	: Number of the player.
+ -Line		: Line read from input. 
+ -Col		: Column read from input.   
  */ 
 getCellInput(Player, Line, Col):-       
 	printPlayerTurn(Player),  
@@ -31,7 +37,7 @@ printPlayerTurn(Player):-
 
 
 % -----------------------------------------------
-%	Input movement direction [asdw]
+% Input movement direction [asdw]
 % -----------------------------------------------  
 
 getMoveInput(Letter):-
@@ -41,22 +47,30 @@ getMoveInput(Letter):-
 
 
 % -----------------------------------------------
-%	Get Real Input 	
+% Get Real Input 	
 % -----------------------------------------------
 
-getRealInput(GameState, Line, Col, RealLine, RealCol):-
-	getRealLine(GameState, Line, RealLine), 
+getRealInput(Line, Col, RealLine, RealCol):-
+	getRealLine(Line, RealLine), 
 	getRealCol(Col, RealCol).
 
 /** 
- * @brief: Convert input line to list position 
- */
-getRealLine(GameState, Line, RealLine):-  
-	getBoardNumLines(GameState, NumLines), 
+ Converts input line to list position.
+ 
+ getRealLine(+Line, -RealLine). 
+ +Line		: The Line from input. 
+ -RealLine	: The line of the +Line in matrix. 
+*/
+getRealLine(Line, RealLine):-  
+	numberOfLines(NumLines), 
 	RealLine is NumLines - Line. 
 
 /**
- * @brief: Convert input column to list position 
+ Converts input column to list position.
+ 
+ getRealCol(+Col, -RealCol).
+ +Col 		:The Col from input. 
+ -RealCol	: The column of the +Col in matrix.     
  */ 
 getRealCol(Col, RealCol):-
 	char_code(Col, X),    
