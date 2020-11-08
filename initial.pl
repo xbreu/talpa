@@ -1,17 +1,23 @@
+:- consult('singleton.pl'). 
+
 % ----------------------------------------------- 
-% 	Init game 	
+%  Init game 	
 % -----------------------------------------------
+
 /**
- * @brief: to change the size of the board, change the values of this function
- */ 
+ To change the size of the board, change the values of this function
+*/ 
 initial(GameState):- 
-	initial(GameState, 5, 5).
+	numberOfLines(Lines), 
+	numberOfCols(Cols), 
+	initial(GameState, Lines, Cols).
 
 
 /**
- * @param R: Number of rows in the game. 
- * @param C: Number of columns. 
- */
+ -[Line|State] : GameState.
+ +R 	: Number of rows in the game. 
+ +C 	: Number of columns. 
+*/
 initial([Line|State], R, C):-     
 	R > 0, 
 	0 is mod(R,2),  
@@ -29,7 +35,7 @@ initial([Line|State], R, C):-
 initial([], 0, _). 
 
 % ----------------------------------------------- 
-% 	Build Lines 	
+%  Build Lines 	
 % -----------------------------------------------
 
 build_line_p1([X|L], N):-   
@@ -51,13 +57,13 @@ build_line_p2([],0).
  
 
 % ----------------------------------------------- 
-% 	Get the value for specific line 
+%  Get the value for specific line 
 % -----------------------------------------------   
 
 /**
- * @brief: These are functions to understand what should be the current value to be displayed in the list 
- * @param N: Number of the column.  
- * @param X: Player to be displayed. 
+ These are functions to understand what should be the current value to be displayed in the list.
+ -X: Player to be displayed. 
+ +N: Number of the column.  
  */  
 
 get_element_p1(X, N):-     

@@ -1,99 +1,107 @@
 :- use_module(library(lists)).
-:- include('utils.pl').
+:- consult('utils.pl').
+:- consult('singleton.pl'). 
+
 % ----------------------------------------------- 
-% 	Init game 	
+%  Main function for make a move 	
 % ----------------------------------------------- 
 
+/**
+ Make a movement if valid. 
+
+ move(+GameState, +Move, +NewGameState)
+ +Gamestate 	: Actual GameState. 
+ +RealLine 	: Line represented from 0 to number of lines in the board. 
+ +RealCol 	:  Column represented from 0 to the number of columns in the board. 
+ +Letter 	: One of a,s,d,w. Representing the direction of the movement.
+ -NewGameState : Return value of the new game state. 
+*/ 
 move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,  
-	validPos(GameState, RealLine, RealCol),  
-	validCapture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),    
+	validPos(RealLine, RealCol),
+	capture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),   
+	% Does the capture.
 	getValueInMatrix(GameState, RealLine, RealCol, CellCurrValue), 
 	replaceInMatrix(GameState, RealLine-RealCol, 0, CurrGameState), 
 	replaceInMatrix(CurrGameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
 
 
-	
+
+ 
+
+% -----------------------------------------------
+% Functions get line and col of captured cell 
 % ----------------------------------------------- 
-% 	Make movement functions
-% ----------------------------------------------- 
-
-replaceInMatrix([L|GameState], 0-Col, NewValue, [NewL|GameState]):- !, 
-	replaceInList(L, Col, NewValue, NewL). 
-
-replaceInMatrix([L|GameState], Line-Col, NewValue, [L|NewGameState]):- !, 
-	NewLine is Line -1,  
-	NewLine >= 0,
-	replaceInMatrix(GameState, NewLine-Col, NewValue, NewGameState).
-
-
-	
-
 
 /**
- * @brief: Replaces an element from [L|List] in position Pos  
- * for a new value called NewValue.
- */ 
-
-replaceInList([_|List], 0, NewValue, [NewValue|List]). 
-replaceInList([L|List], Pos, NewValue, [L|NewList]):- !,
-	AuxPos is Pos- 1, 
-	AuxPos >= 0, 
-	replaceInList(List, AuxPos, NewValue, NewList). 
-
+ Gets the line and col of the cell to be captured. Assumes that +Line and +Col are valid.
  
-
-
-% -----------------------------------------------
-%	Functions for validation of pos
-% -----------------------------------------------
-
-
-validPos(GameState, Line, Col):- !,
-	validLine(GameState, Line),
-	validCol(GameState, Col).   
-
-validLine(GameState, Line):- !,
-	getBoardNumLines(GameState, NumLines),
-	Line >= 0, Line < NumLines. 
-
-
-validCol(GameState, Col):- !,
-	getBoardNumCols(GameState, NumCols), 
-	Col >= 0, Col < NumCols.
- 
-
-% -----------------------------------------------
-%	Functions for validation of capture 
-% ----------------------------------------------- 
-
-
-validCapture(GameState, 'w', Line, Col, NewLine, Col):-  !,  
+ validCapture(+GameState, +Direction, +Line, +Col, +NewLine, +NewCol)
+ + GameState 	: The actual game board. 
+ + Direction 	: The direction of the movement.
+ + Line		: The actual line of the player. 
+ + Col 		: The atual col of the player. 
+ + NewLine	: The new line of the player. 
+ + NewCol	: The new column of the player. 
+*/  
+capture(GameState, 'w', Line, Col, NewLine, Col):-  !,  
 	NewLine is Line -1, 
-	validLine(GameState, NewLine),
+	validLine(NewLine),
 	distinctPlayer(GameState, Line, Col, NewLine, Col).
 	
 
-validCapture(GameState, 's', Line, Col, NewLine, Col):-  !,  
+capture(GameState, 's', Line, Col, NewLine, Col):-  !,  
 	NewLine is Line +1, 
-	validLine(GameState, NewLine),
+	validLine(NewLine),
 	distinctPlayer(GameState, Line, Col, NewLine, Col). 
 
-validCapture(GameState, 'd', Line, Col, Line, NewCol):- !, 
+capture(GameState, 'd', Line, Col, Line, NewCol):- !, 
 	NewCol is Col +1, 
-	validCol(GameState, NewCol),
+	validCol(NewCol),
 	distinctPlayer(GameState, Line, Col, Line, NewCol).  
 
-validCapture(GameState, 'a', Line, Col, Line, NewCol):- !, 
+capture(GameState, 'a', Line, Col, Line, NewCol):- !, 
 	NewCol is Col -1, 
-	validCol(GameState, NewCol),
+	validCol(NewCol),
 	distinctPlayer(GameState, Line, Col, Line, NewCol). 
 
 
-distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):- !,
+/**
+ Verifies if two cells have distinct player, if yes returns yes, otherwise returns no. 
+ If one of the cells has no player, then it fails. 
+
+ distinctPlayer(+GameState, +Line, +Col, +CaptureLine, +CaptureCol) 
+ +GameState	: The actual game board. 
+ +Line		: Line of the actual player. 
+ +Col		: Column of the actual player.
+ +CaptureLine	: Line of the player being captured or another cell. 
+ +CaptureCol	: Col of the player being captured or another cell.  
+*/ 
+distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):-
 	getValueInMatrix(GameState, Line, Col, ActualPlayer),
 	getValueInMatrix(GameState, CaptureLine, CaptureCol, CapturedPlayer), 
 	ActualPlayer \= CapturedPlayer, 
 	ActualPlayer \= 0,
 	CapturedPlayer\= 0.  
 	
+% -----------------------------------------------
+% Functions for validation of position
+% -----------------------------------------------
 
+/**
+ validPos(+Line, +Col). 
+ 
+ Checks if the position if valid in a matrix. 
+ +Line		: Line in matrix. 
+ +Col 		: Column in matrix. 
+*/ 
+validPos(Line, Col):-
+	validLine(Line),
+	validCol(Col).   
+
+validLine(Line):- 
+	numberOfLines(NumLines),
+	Line >= 0, Line < NumLines. 
+
+validCol(Col):- 
+	numberOfCols(NumCols), 
+	Col >= 0, Col < NumCols.
