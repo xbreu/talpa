@@ -1,12 +1,12 @@
 :- use_module(library(lists)).
 :- consult('singleton.pl'). 
+:- use_module(library(random)). 
 
 
 
 
 
-
-random_list(List, Element):-
+random_list(List, Element):- 
         len(List, X), 
         random(0, X, R), 
         nth0(R, List, Element).  
