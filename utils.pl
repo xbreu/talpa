@@ -1,6 +1,13 @@
 :- use_module(library(lists)).
 :- consult('singleton.pl'). 
 
+
+
+sumList([], 0). 
+sumList([X|L], Sum):-
+	sumList(L, NewSum), 
+	Sum is NewSum +X. 
+
 /**
  Gets the value inside a matrix. 
 
