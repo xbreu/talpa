@@ -8,7 +8,7 @@
 %	Display game 
 % ----------------------------------------------- 
 
-display_game(GameState, _) :-
+display_game(GameState, Player) :-
 	print_matrix(GameState).     
 
 play() :-
