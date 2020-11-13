@@ -7,10 +7,25 @@
 % -----------------------------------------------
 
 choose_move(GameState, Player, Level, Moves):- 
-        valid_moves(GameState, Player, ListOfMoves),  
-        setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),
-        setof(Value, member(Value-_, ValuesMovesList), ValuesList), 
-        get_move_by_level(ValuesMovesList, Level, Move).
+        valid_moves(GameState, Player, ListOfMoves),                                                                    % get all possible moves 
+        setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),      % associate values and gamestates for the possible moves 
+        setof(Value, member(Value-_, ValuesMovesList), ValuesList),                                                     % get set of list of values
+        choose_value_by_level(ValuesList, Level, ValueChoosen),                                                         % value of which will be chosen the gamestate.
+        choose_moves_by_level(ValuesMovesList, ValueChoosen, MovesList),                                                 % list of moves with value chosen in the previous line 
+        get_move_by_value(ValuesMovesList, Level, ValueChoosen, Move).                                                  % choose state by the value, randomly 
+
+
+
+choose_moves_by_value([], _, []). 
+choose_moves_by_value([Value-Move|ValuesMovesList], ValueChosen, [Move|MovesList]):-
+        Value == ValueChosen, 
+        choose_move_by_value(ValuesMovesList, ValueChosen, MovesList),!. 
+
+choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):- 
+        Value \= ValueChosen, 
+        choose_move_by_value(ValuesMovesList, ValueChosen, MovesList). 
+          
+                                                 
 
 choose_value_by_level(ValuesList, Level, Value):-
         len(ValuesList, Size), 
