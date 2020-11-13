@@ -1,25 +1,27 @@
 :- consult('utils.pl'). 
 
-% for the player which wins in the horizontal 
-% if we have less cells in the vertical path we sum 1 
-% if we have more cells in the biggest horizontal path sum 1 
+/* 
+ Value of the GameState. Formula: sizeOfPathHorizontal*NumCellsInPath - sizeOfPathVertical*NumCellsInPath
 
-% biggest_row_length - return start cell and size 
-% make the move for the bot 
-
-
+ value(+GameState, +Player, -Value).
+ +GameState     : Actual board state. 
+ +Player        : Number of the actual player 1 or 2. 
+ +Value         : Value of the board.        
+*/ 
 value(GameState, Player, Value):- 
         horizontal_player(Player), 
-       
+        
         findall(NumCells, (
                               getValueInMatrix(GameState, StartLine, StartCol, 0), 
                               orthogonal_row_length([StartCol, StartLine], GameState, NumCells)),
                 HorizontalValues), 
         sumList(HorizontalValues, HorizontalValue),
+        
         findall(NumCells, (
                       getValueInMatrix(GameState, StartLine, StartCol, 0), 
                       orthogonal_col_length([StartCol, StartLine], GameState, NumCells)),
         VerticalValues),
+        
         sumList(VerticalValues, VerticalValue),
         Value is HorizontalValue - VerticalValue. 
 
