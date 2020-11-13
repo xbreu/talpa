@@ -11,5 +11,13 @@
 valid_moves(GameState, Player, ListOfMoves):- !,
         findall(NewGameState, (   member(Letter, ['a','s','d','w']), 
                                   getValueInMatrix(GameState, Line, Col, Player),
+                                  move(GameState, [Line-Col, Letter], NewGameState)), ListOfMoves), 
+        len(ListOfMoves, Size), 
+        Size \= 0, !. 
+
+%TODO: test this function. 
+valid_moves(GameState, Player, ListOfMoves):- !,
+        findall(NewGameState, (   member(Letter, ['r']), 
+                                  getValueInMatrix(GameState, Line, Col, Player),
                                   move(GameState, [Line-Col, Letter], NewGameState)), ListOfMoves). 
-     
+

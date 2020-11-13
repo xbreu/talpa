@@ -1,4 +1,5 @@
 :- use_module(library(lists)).
+:- consult('singleton.pl'). 
 
 /**
  Gets the value inside a matrix. 
@@ -62,10 +63,14 @@ replaceInList([L|List], Pos, NewValue, [L|NewList]):- !,
 
 % Function that get's all the adjacents positions
 adjacent_cell([StartCol, StartRow], [StartCol, NextRow]) :-
-	NextRow is StartRow + 1.
+	NextRow is StartRow + 1, 
+	numberOfLines(Lines), 
+	NextRow < Lines. 
 
 adjacent_cell([StartCol, StartRow], [NextCol, StartRow]) :-
-	NextCol is StartCol + 1.
+	NextCol is StartCol + 1,
+	numberOfCols(Cols),  
+	NextCol < Cols.
 
 adjacent_cell([StartCol, StartRow], [StartCol, PreviousRow]) :-
 	PreviousRow is StartRow - 1,
