@@ -11,23 +11,23 @@
 display_game(GameState, Player) :-
 	print_matrix(GameState).     
 
-play() :-
+play:-
 	initial(GameState),
 	display_game(GameState, 1).
 
-initial_state() :-
+initial_state:-
 	nl,
 	format('-- Turn of player ~d --', 1), 
 	nl,
 	play. 
 
-medium_game() :-
+medium_game:-
 	nl, 
 	format('-- Turn of player ~d --', 1),  
 	nl,
 	display_game([[1,2,2,2,1], [0,2,0,2,0], [2,0,0,2,2],[1,0,1,0,0],[0,1,1,1,1]], 1).  
 
-final_game() :-
+final_game:-
 	nl, 
 	format('-- Player ~d won --', 2),  
 	nl,
