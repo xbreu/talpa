@@ -1,26 +1,19 @@
 :- consult('singleton.pl').
 :- consult('utils.pl').
 
-% ----------------------------------------------------------------
-% Adjacent Cell
-% ----------------------------------------------------------------
-adjacent_cell([StartCol, StartRow], [StartCol, NextRow]) :-
-	NextRow is StartRow + 1.
-
-adjacent_cell([StartCol, StartRow], [NextCol, StartRow]) :-
-	NextCol is StartCol + 1.
-
-adjacent_cell([StartCol, StartRow], [StartCol, PreviousRow]) :-
-	PreviousRow is StartRow - 1,
-	PreviousRow >= 0.
-
-adjacent_cell([StartCol, StartRow], [PreviousCol, StartRow]) :-
-	PreviousCol is StartCol - 1,
-	PreviousCol >= 0.
 
 % ----------------------------------------------------------------
-% orthogonal path
+% Orthogonal path
 % ----------------------------------------------------------------
+/**
+ Checks by dfs if there's a orthogonal and horizontal path. 
+
+ orthogonal_line_row([StartCol, StartRow], +Board, UsedCells) 
+ +StartRow 	: The current Row. 
+ +StartCol 	: The current Col. 
+ +Board 	: The board to be analyzed.
+ -UsedCells 	: The coordinate of the visited cells.  
+*/ 
 orthogonal_line_row([StartCol, _], _, _) :-
 	numberOfCols(StartCol), !.
 
@@ -33,6 +26,15 @@ orthogonal_line_row([StartCol, StartRow], Board, UsedCells) :-
 orthogonal_line_row(X, Board) :-
 	orthogonal_line_row(X, Board, []).
 
+/**
+ Checks by dfs if there's a orthogonal and vertical path. 
+
+ orthogonal_line_col([StartCol, StartRow], +Board, UsedCells) 
+ +StartRow 	: The current Row. 
+ +StartCol 	: The current Col. 
+ +Board 	: The board to be analyzed.
+ -UsedCells 	: The coordinate of the visited cells.  
+*/ 
 orthogonal_line_col([_, StartRow], _, _) :-
 	numberOfLines(StartRow), !.
 
@@ -46,8 +48,9 @@ orthogonal_line_col(X, Board) :-
 	orthogonal_line_col(X, Board, []).
 
 % ----------------------------------------------------------------
-% horizontal
+% Horizontal
 % ----------------------------------------------------------------
+
 game_over_horizontal(_, StartRow) :-
 	numberOfLines(StartRow),
 	!, fail.
@@ -63,8 +66,9 @@ game_over_horizontal(Board) :-
 	game_over_horizontal(Board, 0).
 
 % ----------------------------------------------------------------
-% vertical
+% Vertical
 % ----------------------------------------------------------------
+
 game_over_vertical(_, StartCol) :-
 	numberOfCols(StartCol),
 	!, fail.
@@ -80,7 +84,7 @@ game_over_vertical(Board) :-
 	game_over_vertical(Board, 0).
 
 % ----------------------------------------------------------------
-% game_over(+Board, +LastPlayerMove, -WinnerPlayer)
+% Game_over(+Board, +LastPlayerMove, -WinnerPlayer)
 % ----------------------------------------------------------------
 
 % if in the last move both players achieve the goal the last player loses

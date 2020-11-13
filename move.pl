@@ -7,7 +7,7 @@
 % ----------------------------------------------- 
 
 /**
- Make a movement if valid. 
+ Make a movement if valid. If letter is 'r' we need to remove an piece.  
 
  move(+GameState, +Move, +NewGameState)
  +Gamestate 	: Actual GameState. 
@@ -17,6 +17,7 @@
  -NewGameState : Return value of the new game state. 
 */ 
 move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,  
+	Letter \= 'r', 
 	validPos(RealLine, RealCol),
 	capture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),   
 	% Does the capture.
@@ -24,7 +25,11 @@ move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,
 	replaceInMatrix(GameState, RealLine-RealCol, 0, CurrGameState), 
 	replaceInMatrix(CurrGameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
 
-
+% Remove a peace case there isn't any moves to do. 
+move(GameState, [RealLine-RealCol, Letter], NewGameState):- !, 
+	Letter == 'r', 
+	validPos(RealLine, RealCol), 
+	replaceInMatrix(GameState, RealLine-RealCol, 0, NewGameState). 
 
  
 

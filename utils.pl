@@ -56,3 +56,35 @@ replaceInList([L|List], Pos, NewValue, [L|NewList]):- !,
 	replaceInList(List, AuxPos, NewValue, NewList). 
 
  
+% ----------------------------------------------------------------
+% Adjacent Cell
+% ----------------------------------------------------------------
+
+% Function that get's all the adjacents positions
+adjacent_cell([StartCol, StartRow], [StartCol, NextRow]) :-
+	NextRow is StartRow + 1.
+
+adjacent_cell([StartCol, StartRow], [NextCol, StartRow]) :-
+	NextCol is StartCol + 1.
+
+adjacent_cell([StartCol, StartRow], [StartCol, PreviousRow]) :-
+	PreviousRow is StartRow - 1,
+	PreviousRow >= 0.
+
+adjacent_cell([StartCol, StartRow], [PreviousCol, StartRow]) :-
+	PreviousCol is StartCol - 1,
+	PreviousCol >= 0.
+
+% Checks if two cells are adjacents in a row. 
+is_adjacent_in_row([StartCol, StartRow], [NextCol, StartRow]):-
+	NextCol is StartCol +1, !. 
+
+is_adjacent_in_row([StartCol, StartRow], [PreviousCol, StartRow]):-
+	PreviousCol is StartCol -1.
+
+% Cheks if two cells are adjacents in a col. 
+is_adjacent_in_col([StartCol, StartRow], [StartCol, NextRow]):- 
+	NextRow is StartRow +1, !. 
+
+is_adjacent_in_col([StartCol, StartRow], [StartCol, PreviousRow]):-
+	PreviousRow is StartRow -1. 
