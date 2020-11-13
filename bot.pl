@@ -19,11 +19,11 @@ choose_move(GameState, Player, Level, Moves):-
 choose_moves_by_value([], _, []). 
 choose_moves_by_value([Value-Move|ValuesMovesList], ValueChosen, [Move|MovesList]):-
         Value == ValueChosen, 
-        choose_move_by_value(ValuesMovesList, ValueChosen, MovesList),!. 
+        choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList),!. 
 
 choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):- 
         Value \= ValueChosen, 
-        choose_move_by_value(ValuesMovesList, ValueChosen, MovesList). 
+        choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList). 
           
                                                  
 
