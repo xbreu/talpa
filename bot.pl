@@ -7,6 +7,32 @@
 % biggest_row_length - return start cell and size 
 % make the move for the bot 
 
+
+value(GameState, Player, Value):- 
+        horizontal_player(Player), 
+       
+        findall(NumCells, (
+                              getValueInMatrix(GameState, StartLine, StartCol, 0), 
+                              orthogonal_row_length([StartCol, StartLine], GameState, NumCells)),
+                HorizontalValues), 
+        sumList(HorizontalValues, HorizontalValue),
+        findall(NumCells, (
+                      getValueInMatrix(GameState, StartLine, StartCol, 0), 
+                      orthogonal_col_length([StartCol, StartLine], GameState, NumCells)),
+        VerticalValues),
+        sumList(VerticalValues, VerticalValue),
+        Value is HorizontalValue - VerticalValue. 
+
+value(GameState, Player, Value):-
+        vertical_player(Player), 
+        horizontal_player(HPlayer), 
+        value(GameState, HPlayer, OpositeValue), 
+        Value is 0 - OpositeValue. 
+          
+% ----------------------------------------------- 
+%  Orthogonal length        
+% -----------------------------------------------
+
 /**
  Get's the honrizontal length of a path. 
 
@@ -82,11 +108,9 @@ orthogonal_col_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells
 orthogonal_col_length([_, _], _, _, NumCells, NumCells). 
 
 
-
-
 can_visit_adjacent([CurrCol, CurrLine], Visited, Board):-
         \+member([CurrCol, CurrLine], Visited),                                  % Isnt visited yet 
-        getValueInMatrix(Board, CurrLine, CurrCol, 0).                          % Check if it's 0     
+        getValueInMatrix(Board, CurrLine, CurrCol, 0).                           % Check if it's 0     
         
          
         
