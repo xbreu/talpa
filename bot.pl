@@ -109,7 +109,9 @@ orthogonal_col_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells
 % If no other cell can be visit, ends the recursion. 
 orthogonal_col_length([_, _], _, _, NumCells, NumCells). 
 
-
+/**
+ A cell can be visited if wasn't visited 
+*/ 
 can_visit_adjacent([CurrCol, CurrLine], Visited, Board):-
         \+member([CurrCol, CurrLine], Visited),                                  % Isnt visited yet 
         getValueInMatrix(Board, CurrLine, CurrCol, 0).                           % Check if it's 0     
