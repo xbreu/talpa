@@ -1,5 +1,33 @@
 :- consult('utils.pl'). 
+:- consult('valid_moves.pl'). 
+:- use_module(library(random)). 
 
+% ----------------------------------------------- 
+%  Choose move         
+% -----------------------------------------------
+
+choose_move(GameState, Player, Level, Moves):- 
+        valid_moves(GameState, Player, ListOfMoves),  
+        setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),
+        setof(Value, member(Value-_, ValuesMovesList), ValuesList), 
+        get_move_by_level(ValuesMovesList, Level, Move).
+
+choose_value_by_level(ValuesList, Level, Value):-
+        len(ValuesList, Size), 
+        Size =< Level, 
+        nth1(Size, ValuesList, Value). 
+
+choose_value_by_level(ValuesList, Level, Value):- 
+        len(ValuesList, Size), 
+        Size > Level, 
+        nth1(Level, ValuesList, Value). 
+        
+
+
+
+% ----------------------------------------------- 
+%  Valuate        
+% -----------------------------------------------
 /* 
  Value of the GameState. Formula: sizeOfPathHorizontal*NumCellsInPath - sizeOfPathVertical*NumCellsInPath
 
