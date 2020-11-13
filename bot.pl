@@ -1,18 +1,18 @@
 :- consult('utils.pl'). 
 :- consult('valid_moves.pl'). 
-:- use_module(library(random)). 
+
 
 % ----------------------------------------------- 
 %  Choose move         
 % -----------------------------------------------
 
-choose_move(GameState, Player, Level, Moves):- 
+choose_move(GameState, Player, Level, Move):- !, 
         valid_moves(GameState, Player, ListOfMoves),                                                                    % get all possible moves 
         setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),      % associate values and gamestates for the possible moves 
-        setof(Value, member(Value-_, ValuesMovesList), ValuesList),                                                     % get set of list of values
-        choose_value_by_level(ValuesList, Level, ValueChoosen),                                                         % value of which will be chosen the gamestate.
-        choose_moves_by_level(ValuesMovesList, ValueChoosen, MovesList),                                                 % list of moves with value chosen in the previous line 
-        get_move_by_value(ValuesMovesList, Level, ValueChoosen, Move).                                                  % choose state by the value, randomly 
+        setof(Value, Z^member(Value-Z, ValuesMovesList), ValuesList),                                                     % get set of list of values
+        choose_value_by_level(ValuesList, Level, ValueChosen),                                                         % value of which will be chosen the gamestate.
+        choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList),                                                 % list of moves with value chosen in the previous line 
+        random_list(MovesList, Move).                                                  % choose state by the value, randomly 
 
 
 
