@@ -13,7 +13,6 @@ random_list(List, Element):-
 
 
 
-
 sumList([], 0). 
 sumList([X|L], Sum):-
 	sumList(L, NewSum), 
