@@ -3,6 +3,17 @@
 
 
 
+
+
+
+random_list(List, Element):-
+        len(List, X), 
+        random(0, X, R), 
+        nth0(R, List, Element).  
+
+
+
+
 sumList([], 0). 
 sumList([X|L], Sum):-
 	sumList(L, NewSum), 
