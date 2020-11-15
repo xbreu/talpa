@@ -3,32 +3,60 @@
 %  Main menu       
 % ----------------------------------------------- 
 main_menu:-
-        title,
+        main_title,
         main_options. 
 
-title:-
-menu_delimitation, nl,
-menu_empty_line, nl,                              
-write('|        _ __ ___     ___   _ __    _   _         |'     ), nl,
-write('|       | \'_ ` _ \\   / _ \\ | \'_ \\  | | | |        |'), nl,
-write('|       | | | | | | |  __/ | | | | | |_| |        |'     ), nl,
-write('|       |_| |_| |_|  \\___| |_| |_|  \\__,_|        |'   ), nl,
-menu_empty_line, nl,
-menu_empty_line, nl,
-menu_empty_line, nl.  
+main_title:-
+        menu_delimitation, nl,
+        menu_empty_line, nl,                              
+        write('|        _ __ ___     ___   _ __    _   _         |'     ), nl,
+        write('|       | \'_ ` _ \\   / _ \\ | \'_ \\  | | | |        |'), nl,
+        write('|       | | | | | | |  __/ | | | | | |_| |        |'     ), nl,
+        write('|       |_| |_| |_|  \\___| |_| |_|  \\__,_|        |'   ), nl,
+        menu_empty_line, nl,
+        menu_empty_line, nl,
+        menu_empty_line, nl.  
+
+
+main_options:-
+        menu_empty_line, nl, 
+        write('|                1) Play                          |'),nl,
+        write('|                2) Choose level [default=0]      |'),nl, 
+        write('|                3) Exit                          |'),nl, 
+        menu_empty_line                                             ,nl,
+        menu_delimitation                                           ,nl. 
+        
+% ----------------------------------------------- 
+%  Level Menu        
+% ----------------------------------------------- 
+
+level_menu:-
+        level_title,
+        level_options. 
+
+level_title:- 
+        menu_delimitation, nl,
+        menu_empty_line, nl, 
+        write('|          _                         _            |        '),nl, 
+        write('|         | |                       | |           |        '),nl,        
+        write('|         | |   ___  __   __   ___  | |           |        '),nl,
+        write('|         | |  / _ \\ \\ \\ / /  / _ \\ | |           |    '),nl,
+        write('|         | | |  __/  \\ V /  |  __/ | |           |       '),nl,
+        write('|         |_|  \\___|   \\_/    \\___| |_|           |     '),nl,
+        menu_empty_line, nl,
+        menu_empty_line, nl,
+        menu_empty_line, nl.  
+   
+level_options:- 
+        menu_empty_line, nl, 
+        write('|  Choose a value for the for the level [\'0-10\']  |        '),nl,
+        menu_empty_line, nl, 
+        menu_empty_line, nl, 
+        menu_delimitation. 
+
 
 menu_empty_line:-
         write('|                                                 |'). 
 
 menu_delimitation:-
         write('*-------------------------------------------------*'). 
-
-main_options:-
-menu_empty_line, nl, 
-write('|                1) Play                          |'),nl,
-write('|                2) Choose level                  |'),nl, 
-write('|                3) Exit                          |'),nl, 
-menu_empty_line,nl,
-menu_delimitation, nl. 
-        
-        
