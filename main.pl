@@ -29,8 +29,16 @@ play(GameState, _, Player) :-
 make_move(GameState, _, 1, NewGameState) :-
 	printPlayerTurn(1),
 	display_game(GameState, 1),
+	valid_moves_asdw(GameState, 1, ListOfMoves), 		% check if it's necessary to remove a piece
+	ListOfMoves \= [], !, 
 	getMovement(GameState, 1, Row, Column, Direction),
    	move(GameState, [Row-Column, Direction], NewGameState).
+
+% We want the player to remove a piece. 
+make_move(GameState, _, 1, NewGameState) :-
+	getMovement_r(GameState, 1, Row, Column),
+   	move(GameState, [Row-Column, 'r'], NewGameState).
+
 
 make_move(GameState, Level, 2, NewGameState) :-
 	choose_move(GameState, 2, Level, NewGameState).

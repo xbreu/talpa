@@ -8,12 +8,9 @@
  +Player        : The actual player to move. 
  -ListOfMoves   : List of all possible next states for the game.
 */
-valid_moves(GameState, Player, ListOfMoves):- !,
-        findall(NewGameState, (   member(Letter, ['a','s','d','w']), 
-                                  getValueInMatrix(GameState, Line, Col, Player),
-                                  move(GameState, [Line-Col, Letter], NewGameState)), ListOfMoves), 
-        len(ListOfMoves, Size), 
-        Size \= 0, !. 
+valid_moves(GameState, Player, ListOfMoves):- 
+        valid_moves_asdw(GameState, Player, ListOfMoves), 
+        ListOfMoves \= [], !. 
 
 %TODO: test this function. 
 valid_moves(GameState, Player, ListOfMoves):- !,
@@ -21,3 +18,8 @@ valid_moves(GameState, Player, ListOfMoves):- !,
                                   getValueInMatrix(GameState, Line, Col, Player),
                                   move(GameState, [Line-Col, Letter], NewGameState)), ListOfMoves). 
 
+% just get moves for the direction aswd. 
+valid_moves_asdw(GameState, Player, ListOfMoves):- 
+        findall(NewGameState, (   member(Letter, ['a','s','d','w']), 
+                                  getValueInMatrix(GameState, Line, Col, Player),
+                                  move(GameState, [Line-Col, Letter], NewGameState)), ListOfMoves). 

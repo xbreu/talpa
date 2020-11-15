@@ -147,6 +147,16 @@ printPlayerTurn(Player):-
 	format('--Player ~s turn--', Code),
 	nl.
 
+% In case we want to remove a piece. 
+getMovement_r(GameState, Player, Row, Column):-
+	write('No captures available. Remove a piece'), nl, 
+	getCellLine(Row),
+	getCellCol(Column),
+	getValueInMatrix(GameState, Row, Column, Player), !. 
+
+getMovement_r(GameState, Player, Row, Column) :-
+	print('That piece is not yours!\n'),
+	getMovement_r(GameState, Player, Row, Column).
 
 getMovement(GameState, Player, Row, Column, Direction) :-
 	getCellLine(Row),
@@ -157,3 +167,7 @@ getMovement(GameState, Player, Row, Column, Direction) :-
 getMovement(GameState, Player, Row, Column, Direction) :-
 	print('That piece is not yours!\n'),
 	getMovement(GameState, Player, Row, Column, Direction).
+
+
+
+
