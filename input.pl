@@ -17,23 +17,38 @@ getCellInput(Player, Line, Col):-
 	printPlayerTurn(Player),  
 	getCellLine(Line), 
 	getCellCol(Col).
-	
-getCellLine(Line):- 
-	print('LINE>> '),  
-	get_char(Line1),       
-	skip_line,
-	char_code(Line1, CodeLine), 
-	Line is CodeLine - 48.    
 
-getCellCol(Col):- 
-	print('COL>> '), 
+/**
+ Gets the line as input of determine player with error treatment. 
+ It will returns if the player gives a valid input. 
+
+ getCellLine(-Line).   
+ */ 	
+getCellLine(RealLine):- 
+	numberOfLines(MaxLines), 
+	getInputInt('LINE >>  ', 0, MaxLines, Line),
+	getRealLine(Line, RealLine).  
+
+/**
+ Gets the column as input of determine player with error treatment. 
+ It will returns if the player gives a valid input. 
+
+ getCellCol(-RealCol).   
+ */
+getCellCol(RealCol):- 
+	numberOfCols(MaxCols),  
+	print('COL >> '), 
 	get_char(Col),     
-	skip_line. 
-
-printPlayerTurn(Player):-   
-	nl,
-	format('--Player ~d turn--', Player),  
-	nl. 
+	skip_line, 
+	getRealCol(Col, RealCol), 
+	RealCol >= 0, 
+	RealCol < MaxCols, !. 
+	
+getCellCol(RealCol):-
+	numberOfCols(MaxCols), 
+	format('>Invalid input. Range must be [0-~d).<', MaxCols), 
+	nl, 
+	getCellCol(RealCol). 
 
 
 % -----------------------------------------------
@@ -41,9 +56,8 @@ printPlayerTurn(Player):-
 % -----------------------------------------------  
 
 getMoveInput(Letter):-
-	print('MOVE[asdw]>>'),
-	get_char(Letter),
-	skip_line. 
+	getInputOpt('MOVE[asdw]>>', ['a','s','d','w'], Letter).
+
 
 
 % -----------------------------------------------
@@ -75,3 +89,59 @@ getRealLine(Line, RealLine):-
 getRealCol(Col, RealCol):-
 	char_code(Col, X),    
 	RealCol is X-97. 
+
+% -----------------------------------------------
+% Get Any input int	
+% -----------------------------------------------
+/** 
+ Get a valid input between a range. 
+ 
+ getInputInt(+Line, -RealLine). 
+ +Label		: The Label for the input. 
+ +Floor		: Min value that can be chosen. 
+ +Ceil 		: Max value (not including it self) that can be chosen. 
+ -Value 	: Valid value input. 
+*/
+getInputInt(Label, Floor, Ceil, Value):-
+	format('~s\n', Label), 
+	get_char(ValueChar), 
+	skip_line,
+	
+	char_code(ValueChar, ValueASCII),
+	Value is ValueASCII - 48, 
+	
+	Value >= Floor, 
+	Value < Ceil, !.  
+
+getInputInt(Label, Floor, Ceil, Value):-  
+	write('Invalid input !!'), nl,
+	getInputInt(Label, Floor, Ceil, Value). 
+
+% -----------------------------------------------
+% Get Any input from selected options	
+% -----------------------------------------------
+
+/** 
+ Get a valid input, where the input be one of the given options. 
+ 
+ getInputOpt(+Label, +Options, -Value). 
+ +Label		: Label for the input. 
+ +Options	: Options of which the input must belong.
+ -Value		: The valid input.  
+*/
+getInputOpt(Label, Options , Value):-
+	format('~s\n', Label), 
+	get_char(Value), 
+	skip_line,
+	
+	member(Value, Options), !.  
+
+getInputOpt(Label, Options , Value):- 
+	write('Invalid input !!'), nl,
+	getInputOpt(Label, Options, Value).
+
+
+printPlayerTurn(Player):-   
+	nl,
+	format('--Player ~d turn--', Player),  
+	nl. 
