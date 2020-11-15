@@ -1,8 +1,8 @@
 % Determines the number of lines in the game.
-numberOfLines(5). 
+numberOfLines(8). 
 
 % Determines the number of columns in the game. 
-numberOfCols(5).
+numberOfCols(8).
 
 % horizontal and vertical players
 vertical_player(1).
