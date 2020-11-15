@@ -1,52 +1,6 @@
 :- consult('singleton.pl').
 :- consult('utils.pl').
 
-
-% ----------------------------------------------------------------
-% Orthogonal path
-% ----------------------------------------------------------------
-/**
- Checks by dfs if there's a orthogonal and horizontal path. 
-
- orthogonal_line_row([StartCol, StartRow], +Board, UsedCells) 
- +StartRow 	: The current Row. 
- +StartCol 	: The current Col. 
- +Board 	: The board to be analyzed.
- -UsedCells 	: The coordinate of the visited cells.  
-*/ 
-orthogonal_line_row([StartCol, _], _, _) :-
-	numberOfCols(StartCol), !.
-
-orthogonal_line_row([StartCol, StartRow], Board, UsedCells) :-
-	getValueInMatrix(Board, StartCol, StartRow, 0),
-	adjacent_cell([StartCol, StartRow], New),
-	nonmember(New, UsedCells),
-	orthogonal_line_row(New, Board, [New | UsedCells]).
-
-orthogonal_line_row(X, Board) :-
-	orthogonal_line_row(X, Board, []).
-
-/**
- Checks by dfs if there's a orthogonal and vertical path. 
-
- orthogonal_line_col([StartCol, StartRow], +Board, UsedCells) 
- +StartRow 	: The current Row. 
- +StartCol 	: The current Col. 
- +Board 	: The board to be analyzed.
- -UsedCells 	: The coordinate of the visited cells.  
-*/ 
-orthogonal_line_col([_, StartRow], _, _) :-
-	numberOfLines(StartRow), !.
-
-orthogonal_line_col([StartCol, StartRow], Board, UsedCells) :-
-	getValueInMatrix(Board, StartCol, StartRow, 0),
-	adjacent_cell([StartCol, StartRow], New),
-	nonmember(New, UsedCells),
-	orthogonal_line_col(New, Board, [New | UsedCells]).
-
-orthogonal_line_col(X, Board) :-
-	orthogonal_line_col(X, Board, []).
-
 % ----------------------------------------------------------------
 % Horizontal
 % ----------------------------------------------------------------
@@ -56,7 +10,8 @@ game_over_horizontal(_, StartRow) :-
 	!, fail.
 
 game_over_horizontal(Board, StartRow) :-
-	orthogonal_line_row([0, StartRow], Board).
+	numberOfCols(NumCells),
+	orthogonal_row_length([0, StartRow], Board, NumCells).
 
 game_over_horizontal(Board, StartRow) :-
 	NextRow is StartRow + 1,
@@ -74,7 +29,8 @@ game_over_vertical(_, StartCol) :-
 	!, fail.
 
 game_over_vertical(Board, StartCol) :-
-	orthogonal_line_col([StartCol, 0], Board).
+	numberOfLines(NumCells),
+	orthogonal_col_length([StartCol, 0], Board, NumCells).
 
 game_over_vertical(Board, StartCol) :-
 	NextCol is StartCol + 1,

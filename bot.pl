@@ -13,7 +13,7 @@
  +GameState     : Current board of the game. 
  +Player        : Current player. 
  +Level         : Difficulty level. 
- -Move          : The move choosen randomly, but according to the level. 
+ -Move          : The move chosen randomly, but according to the level.
 */ 
 choose_move(GameState, Player, Level, Move):- !, 
         valid_moves(GameState, Player, ListOfMoves),                                                                    % get all possible moves 
