@@ -3,6 +3,8 @@
 :- consult('utils.pl').  
 :- consult('move.pl'). 
 :- consult('valid_moves.pl'). 
+:- consult('end.pl'). 
+:- consult('bot.pl'). 
 
 % -----------------------------------------------
 %	Display game 
