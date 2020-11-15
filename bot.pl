@@ -1,5 +1,70 @@
 :- consult('utils.pl'). 
+:- consult('valid_moves.pl'). 
 
+
+% ----------------------------------------------- 
+%  Choose move         
+% -----------------------------------------------
+
+/**
+ Choose a move for the pc according to the level. 
+
+ choose_move(+GameState, +Player, +Level, -Move). 
+ +GameState     : Current board of the game. 
+ +Player        : Current player. 
+ +Level         : Difficulty level. 
+ -Move          : The move choosen randomly, but according to the level. 
+*/ 
+choose_move(GameState, Player, Level, Move):- !, 
+        valid_moves(GameState, Player, ListOfMoves),                                                                    % get all possible moves 
+        setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),      % get game moves and its respectives values  
+        setof(Value, Z^member(Value-Z, ValuesMovesList), ValuesList),                                                   % get set of values
+        choose_value_by_level(ValuesList, Level, ValueChosen),                                                          % value of which will be chosen the gamestate
+        choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList),                                                 % list of moves with value chosen in the previous line 
+        random_list(MovesList, Move).                                                                                   % choose state by the value, randomly 
+
+
+/**
+ Get a list of moves with a specific value.
+ 
+ choose_moves_by_value(+ValuesMovesList, +ValueChosen, -MovesList). 
+ +ValuesMovesList       : List with all possible moves and its values. 
+ +ValueChosen           : Lists with this value will be selected. 
+ -MovesList             : List of moves with the given value. 
+*/ 
+choose_moves_by_value([], _, []). 
+choose_moves_by_value([Value-Move|ValuesMovesList], ValueChosen, [Move|MovesList]):-
+        Value == ValueChosen, 
+        choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList),!. 
+
+choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):- 
+        Value \= ValueChosen, 
+        choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList). 
+          
+/**
+ From the values give, choose the Level th value from the list of values. If Level > values.size, the the chosen value will be the last element from the list.
+
+ choose_value_by_level(+ValuesList, +Level, -Value).  
+ +ValuesList            : Set of values. 
+ +Level                 : Level chosen. 
+ -Value                 : Retrieved value. 
+*/                                                  
+choose_value_by_level(ValuesList, Level, Value):-
+        len(ValuesList, Size), 
+        Size =< Level, 
+        nth1(Size, ValuesList, Value). 
+
+choose_value_by_level(ValuesList, Level, Value):- 
+        len(ValuesList, Size), 
+        Size > Level, 
+        nth1(Level, ValuesList, Value). 
+        
+
+
+
+% ----------------------------------------------- 
+%  Valuate        
+% -----------------------------------------------
 /* 
  Value of the GameState. Formula: sizeOfPathHorizontal*NumCellsInPath - sizeOfPathVertical*NumCellsInPath
 
