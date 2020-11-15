@@ -6,7 +6,7 @@
 %  Main function for make a move 	
 % ----------------------------------------------- 
 
-/**
+/*
  Make a movement if valid. If letter is 'r' we need to remove an piece.  
 
  move(+GameState, +Move, +NewGameState)
@@ -15,9 +15,14 @@
  +RealCol 	:  Column represented from 0 to the number of columns in the board. 
  +Letter 	: One of a,s,d,w. Representing the direction of the movement.
  -NewGameState : Return value of the new game state. 
-*/ 
-move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,  
-	Letter \= 'r', 
+*/
+
+% Remove a peace case there isn't any moves to do.
+move(GameState, [RealLine-RealCol, 'r'], NewGameState):- !,
+	validPos(RealLine, RealCol),
+	replaceInMatrix(GameState, RealLine-RealCol, 0, NewGameState).
+
+move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,
 	validPos(RealLine, RealCol),
 	capture(GameState, Letter, RealLine, RealCol, CaptureLine, CaptureCol),   
 	% Does the capture.
@@ -25,13 +30,6 @@ move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,
 	replaceInMatrix(GameState, RealLine-RealCol, 0, CurrGameState), 
 	replaceInMatrix(CurrGameState, CaptureLine-CaptureCol, CellCurrValue, NewGameState). 
 
-% Remove a peace case there isn't any moves to do. 
-move(GameState, [RealLine-RealCol, Letter], NewGameState):- !, 
-	Letter == 'r', 
-	validPos(RealLine, RealCol), 
-	replaceInMatrix(GameState, RealLine-RealCol, 0, NewGameState). 
-
- 
 
 % -----------------------------------------------
 % Functions get line and col of captured cell 

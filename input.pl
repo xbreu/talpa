@@ -12,7 +12,7 @@
  +Player 	: Number of the player.
  -Line		: Line read from input. 
  -Col		: Column read from input.   
- */ 
+ */
 getCellInput(Player, Line, Col):-       
 	printPlayerTurn(Player),  
 	getCellLine(Line), 
@@ -25,8 +25,9 @@ getCellInput(Player, Line, Col):-
  getCellLine(-Line).   
  */ 	
 getCellLine(RealLine):- 
-	numberOfLines(MaxLines), 
-	getInputInt('LINE >>  ', 0, MaxLines, Line),
+	numberOfLines(MaxLines),
+	RealMaxLines is MaxLines + 1,
+	getInputInt('LINE >>  ', 1, RealMaxLines, Line),
 	getRealLine(Line, RealLine).  
 
 /**
@@ -41,8 +42,8 @@ getCellCol(RealCol):-
 	get_char(Col),     
 	skip_line, 
 	getRealCol(Col, RealCol), 
-	RealCol >= 0, 
-	RealCol < MaxCols, !. 
+	RealCol >= 0,
+	RealCol < MaxCols, !.
 	
 getCellCol(RealCol):-
 	numberOfCols(MaxCols), 
@@ -110,8 +111,8 @@ getInputInt(Label, Floor, Ceil, Value):-
 	char_code(ValueChar, ValueASCII),
 	Value is ValueASCII - 48, 
 	
-	Value >= Floor, 
-	Value < Ceil, !.  
+	Value >= Floor,
+	Value < Ceil, !.
 
 getInputInt(Label, Floor, Ceil, Value):-  
 	write('Invalid input !!'), nl,
@@ -140,8 +141,19 @@ getInputOpt(Label, Options , Value):-
 	write('Invalid input !!'), nl,
 	getInputOpt(Label, Options, Value).
 
-
 printPlayerTurn(Player):-   
 	nl,
-	format('--Player ~d turn--', Player),  
-	nl. 
+	code(Player, Code),
+	format('--Player ~s turn--', Code),
+	nl.
+
+
+getMovement(GameState, Player, Row, Column, Direction) :-
+	getCellLine(Row),
+	getCellCol(Column),
+	getValueInMatrix(GameState, Row, Column, Player), !,
+	getMoveInput(Direction).
+
+getMovement(GameState, Player, Row, Column, Direction) :-
+	print('That piece is not yours!\n'),
+	getMovement(GameState, Player, Row, Column, Direction).

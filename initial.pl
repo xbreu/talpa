@@ -76,10 +76,10 @@ get_element_p1(X, N):-
 
 get_element_p2(X,N):-
 	0 is mod(N,2),  
-	X is 2.  
+	X is 2.
 
 get_element_p2(X,N):- 
 	1 is mod(N,2), 
-	X is 1. 
+	X is 1.
 
 
