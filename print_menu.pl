@@ -20,9 +20,9 @@ main_title:-
 
 main_options:-
         menu_empty_line, nl, 
-        write('|                1) Play                          |'),nl,
-        write('|                2) Choose level [default=0]      |'),nl, 
-        write('|                3) Exit                          |'),nl, 
+        write('|              1) Play                            |'),nl,
+        write('|              2) Choose level [default=0]        |'),nl, 
+        write('|              3) Exit                            |'),nl, 
         menu_empty_line                                             ,nl,
         menu_delimitation                                           ,nl. 
         
