@@ -16,7 +16,8 @@
  -Move          : The move chosen randomly, but according to the level.
 */ 
 choose_move(GameState, Player, Level, Move):- !, 
-        valid_moves(GameState, Player, ListOfMoves),                                                                    % get all possible moves 
+        valid_moves(GameState, Player, ListOfMoves), 
+                write(ListOfMoves), nl,  % get all possible moves 
         setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),      % get game moves and its respectives values  
         setof(Value, Z^member(Value-Z, ValuesMovesList), ValuesList),                                                   % get set of values
         choose_value_by_level(ValuesList, Level, ValueChosen),                                                          % value of which will be chosen the gamestate
