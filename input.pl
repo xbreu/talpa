@@ -25,10 +25,20 @@ getCellLine(Line):-
 	char_code(Line1, CodeLine), 
 	Line is CodeLine - 48.    
 
-getCellCol(Col):- 
+getCellCol(RealCol):- 
+	numberOfCols(MaxCols),  
 	print('COL>> '), 
 	get_char(Col),     
-	skip_line. 
+	skip_line, 
+	getRealCol(Col, RealCol), 
+	RealCol >= 0, 
+	RealCol < MaxCols, !. 
+	
+getCellCol(RealCol):-
+	numberOfCols(MaxCols), 
+	format('>Invalid input. Range must be [0-~d).<', MaxCols), 
+	nl, 
+	getCellCol(RealCol). 
 
 printPlayerTurn(Player):-   
 	nl,
@@ -41,9 +51,8 @@ printPlayerTurn(Player):-
 % -----------------------------------------------  
 
 getMoveInput(Letter):-
-	print('MOVE[asdw]>>'),
-	get_char(Letter),
-	skip_line. 
+	getInputOpt('MOVE[asdw]>>', ['a','s','d','w'], Letter).
+
 
 
 % -----------------------------------------------
@@ -75,3 +84,37 @@ getRealLine(Line, RealLine):-
 getRealCol(Col, RealCol):-
 	char_code(Col, X),    
 	RealCol is X-97. 
+
+% -----------------------------------------------
+% Get Any input int	
+% -----------------------------------------------
+
+getInputInt(Text, Floor, Ceil, Value):-
+	format('~s\n', Text), 
+	get_char(ValueChar), 
+	skip_line,
+	
+	char_code(ValueChar, ValueASCII),
+	Value is ValueASCII - 48, 
+	
+	Value >= Floor, 
+	Value =< Ceil, !.  
+
+getInputInt(Text, Floor, Ceil, Value):-  
+	write('Invalid input !!'), nl,
+	getInputInt(Text, Floor, Ceil, Value). 
+
+% -----------------------------------------------
+% Get Any input from selected options	
+% -----------------------------------------------
+
+getInputOpt(Text, Options , Value):-
+	format('~s\n', Text), 
+	get_char(Value), 
+	skip_line,
+	
+	member(Value, Options), !.  
+
+getInputOpt(Text, Options , Value):- 
+	write('Invalid input !!'), nl,
+	getInputOpt(Text, Options, Value).

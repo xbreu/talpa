@@ -49,7 +49,9 @@ level_title:-
    
 level_options:- 
         menu_empty_line, nl, 
-        write('|  Choose a value for the for the level [\'0-10\']  |        '),nl,
+        write('|  Choose a value for the for the level [\'0-9\']   |        '),nl,
+        write('|  * If two digits are written, just the first one  |        '),nl,
+        write('|    will be considered|                            |        '),nl,
         menu_empty_line, nl, 
         menu_empty_line, nl, 
         menu_delimitation. 
