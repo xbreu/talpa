@@ -1,12 +1,11 @@
 :- consult('utils.pl'). 
 :- consult('valid_moves.pl'). 
 
-
 % ----------------------------------------------- 
 %  Choose move         
 % -----------------------------------------------
 
-/**
+/*
  Choose a move for the pc according to the level. 
 
  choose_move(+GameState, +Player, +Level, -Move). 
@@ -24,7 +23,7 @@ choose_move(GameState, Player, Level, Move):- !,
         random_list(MovesList, Move).                                                                                   % choose state by the value, randomly 
 
 
-/**
+/*
  Get a list of moves with a specific value.
  
  choose_moves_by_value(+ValuesMovesList, +ValueChosen, -MovesList). 
@@ -41,7 +40,7 @@ choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):-
         Value \= ValueChosen, 
         choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList). 
           
-/**
+/*
  From the values give, choose the Level th value from the list of values. If Level > values.size, the the chosen value will be the last element from the list.
 
  choose_value_by_level(+ValuesList, +Level, -Value).  
@@ -101,7 +100,7 @@ value(GameState, Player, Value):-
 %  Orthogonal length        
 % -----------------------------------------------
 
-/**
+/*
  Get's the honrizontal length of a path. 
 
  orthogonal_row_length([+StartCol, +StartLine], +Board, -NumCells).
@@ -139,7 +138,7 @@ orthogonal_row_length([_, _], _, _, NumCells, NumCells).
 
 
 
-/**
+/*
  Get's the Vertical length of a path. 
 
  orthogonal_col_length([+StartCol, +StartLine], +Board, -NumCells).
@@ -175,7 +174,7 @@ orthogonal_col_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells
 % If no other cell can be visit, ends the recursion. 
 orthogonal_col_length([_, _], _, _, NumCells, NumCells). 
 
-/**
+/*
  A cell can be visited if wasn't visited 
 */ 
 can_visit_adjacent([CurrCol, CurrLine], Visited, Board):-
