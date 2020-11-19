@@ -1,34 +1,37 @@
 :- consult('singleton.pl').
 :- consult('utils.pl').
 
-columns([], 0).
+% -----------------------------------------------
+% Board matrix construction
+% -----------------------------------------------
 
+% returns a list with the columns starting with 'a' and following ascii sequence
+columns([], 0).
 columns(List, Len) :-
 	Code is Len + 96,
 	char_code(Head, Code),
 	Len1 is Len - 1,
 	columns(Tail, Len1),
 	append(Tail, [Head], List).
-
 columns(Length) :-
 	columns([], Length).
 
+% adds an element to each line with the respective number of the line in decrescent order
 add_line_symbols([], _, []).
-
 add_line_symbols([Head | Tail], Number, [[NumberEncoded | Head] | Recursion]) :-
 	Number1 is Number + 1,
-	NumberEncoded is - Number,
+	numberOfLines(L),
+	NumberEncoded is -(L - Number + 1),
 	add_line_symbols(Tail, Number1, Recursion).
+add_line_symbols([Head | Tail], [[0 | Head] | ResultMatrix]) :-
+	add_line_symbols(Tail, 1, ResultMatrix).
 
-add_line_symbols(Matrix, ResultMatrix) :-
-	add_line_symbols(Matrix, 0, ResultMatrix).
-
+% returns the board matrix
 get_board_matrix(Board, BoardMatrix) :-
 	numberOfCols(N),
 	columns(ColumnList, N),
 	append([ColumnList], Board, Matrix),
 	add_line_symbols(Matrix, BoardMatrix).
-	% print(BoardMatrix).
 
 print_board(Board) :-
 	get_board_matrix(Board, Matrix),
@@ -120,7 +123,6 @@ print_cell(Number) :-
 	Number < 0, !,
 	RealNumber is - Number,
 	print_cell_content(RealNumber).
-
 print_cell(H) :-
     code(H, C),
     print_cell_content(C).
