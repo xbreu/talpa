@@ -22,7 +22,7 @@ play :-
 	play(GameState, Level, 1).
 
 play(GameState, _, Player) :-
-	game_over(GameState, Player, Winner), !,
+	game_over(Player-GameState, Winner), !,
 	display_game(GameState, Player),
 	print('Player '), print(Winner), print(' wins'), nl.
 
