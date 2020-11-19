@@ -1,5 +1,9 @@
 :- consult('move.pl'). 
 
+% -----------------------------------------------
+% Valid moves
+% -----------------------------------------------
+
 % Returns all the possible moves for a player.
 % valid_moves(+GameState, +Player, -ListOfMoves).
 % +GameState     : Actual matrix of the game.
