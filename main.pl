@@ -13,7 +13,7 @@
 % ----------------------------------------------- 
 
 display_game(GameState, Player) :-
-	print_matrix(GameState).
+	print_board(GameState).
 
 print_winner(Winner) :-
 	print('Player '),

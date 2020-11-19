@@ -6,6 +6,12 @@
 % List functions
 % -----------------------------------------------
 
+% Calculates length of list
+len([],0).
+len([_|T],N) :-
+	len(T,A),
+	N is A + 1.
+
 % Chooses a random element from a list.
 % random_list(+List, -Element).
 random_list(List, Element) :-
