@@ -44,20 +44,50 @@ game_over_vertical(Board) :-
 % ----------------------------------------------------------------
 
 % if in the last move both players achieve the goal the last player loses
-game_over(Board, X, Y) :-
-	horizontal_player(X),
+game_over(Player-Board, Winner) :-
+	horizontal_player(Player),
 	game_over_vertical(Board), !,
-	vertical_player(Y).
+	vertical_player(Winner).
 
-game_over(Board, X, Y) :-
-	vertical_player(X),
+game_over(Player-Board, Winner) :-
+	vertical_player(Player),
 	game_over_horizontal(Board), !,
-	horizontal_player(Y).
+	horizontal_player(Winner).
 
-game_over(Board, X, X) :-
-	horizontal_player(X),
+game_over(Player-Board, Player) :-
+	horizontal_player(Player),
 	game_over_horizontal(Board).
 
-game_over(Board, X, X) :-
-	vertical_player(X),
+game_over(Player-Board, Player) :-
+	vertical_player(Player),
 	game_over_vertical(Board).
+
+
+% ----------------------------------------------- 
+%  End Game Display        
+% ----------------------------------------------- 
+
+display_x_wins :- 
+	write('         _                                                       _                 _ '), nl,
+	write(' _ __   | |   __ _   _   _    ___   _ __    __  __   __      __ (_)  _ __    ___  | |'), nl,
+	write('| \'_ \\  | |  / _\` | | | | |  / _ \\ | \'__|   \\ \\/ /   \\ \\ /\\ / / | | | \'_ \\  / __| | |'), nl,
+	write('| |_) | | | | (_| | | |_| | |  __/ | |       >  <     \\ V  V /  | | | | | | \\__ \\ |_|'), nl,
+	write('| .__/  |_|  \\__,_|  \\__, |  \\___| |_|      /_/\\_\\     \\_/\\_/   |_| |_| |_| |___/ (_)'), nl,
+	write('|_|                  |___/                                                           ').
+		      
+
+display_o_wins :-
+	write('          _                                    ___                 _                 _ '), nl,
+	write('  _ __   | |   __ _   _   _    ___   _ __     / _ \\    __      __ (_)  _ __    ___  | |'), nl,
+	write(' | \'_ \\  | |  / _` | | | | |  / _ \\ | \'__|   | | | |   \\ \\ /\\ / / | | | \'_ \\  / __| | |'), nl,
+	write(' | |_) | | | | (_| | | |_| | |  __/ | |      | |_| |    \\ V  V /  | | | | | | \\__ \\ |_|'), nl,
+	write(' | .__/  |_|  \\__,_|  \\__, |  \\___| |_|       \\___/      \\_/\\_/   |_| |_| |_| |___/ (_)'), nl,
+	write(' |_|                  |___/                                                                  ').
+
+
+
+
+
+
+     
+           
