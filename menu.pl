@@ -75,7 +75,7 @@ display_level_options(Player) :-
         format('|         CONFIGURATIONS FOR PLAYER ~w             |        ', Code),nl,
         menu_empty_line, nl, 
         write('|  - To play as HUMAN type 0.                     |        '),nl,
-        write('|  - To choose a BOT type the level [\'0-9\']       |        '),nl,
+        write('|  - To choose a BOT type the level [\'1-9\']       |        '),nl,
         write('|  - If two digits are written, just the first    |        '),nl,
         write('|    one will be considered                       |        '),nl,
 
