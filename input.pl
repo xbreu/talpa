@@ -104,7 +104,7 @@ getRealCol(Col, RealCol):-
  -Value 	: Valid value input. 
 */
 getInputInt(Label, Floor, Ceil, Value):-
-	format('~s\n', Label), 
+	format('~s\n', Label),
 	get_char(ValueChar), 
 	skip_line,
 	
