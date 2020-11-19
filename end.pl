@@ -48,16 +48,13 @@ game_over(Player-Board, Winner) :-
 	horizontal_player(Player),
 	game_over_vertical(Board), !,
 	vertical_player(Winner).
-
 game_over(Player-Board, Winner) :-
 	vertical_player(Player),
 	game_over_horizontal(Board), !,
 	horizontal_player(Winner).
-
 game_over(Player-Board, Player) :-
 	horizontal_player(Player),
 	game_over_horizontal(Board).
-
 game_over(Player-Board, Player) :-
 	vertical_player(Player),
 	game_over_vertical(Board).
@@ -65,7 +62,10 @@ game_over(Player-Board, Player) :-
 
 % ----------------------------------------------- 
 %  End Game Display        
-% ----------------------------------------------- 
+% -----------------------------------------------
+
+print_winner(1) :- display_x_wins.
+print_winner(2) :- display_o_wins.
 
 display_x_wins :- 
 	write('         _                                                       _                 _ '), nl,
@@ -74,7 +74,6 @@ display_x_wins :-
 	write('| |_) | | | | (_| | | |_| | |  __/ | |       >  <     \\ V  V /  | | | | | | \\__ \\ |_|'), nl,
 	write('| .__/  |_|  \\__,_|  \\__, |  \\___| |_|      /_/\\_\\     \\_/\\_/   |_| |_| |_| |___/ (_)'), nl,
 	write('|_|                  |___/                                                           ').
-		      
 
 display_o_wins :-
 	write('          _                                    ___                 _                 _ '), nl,
@@ -84,10 +83,3 @@ display_o_wins :-
 	write(' | .__/  |_|  \\__,_|  \\__, |  \\___| |_|       \\___/      \\_/\\_/   |_| |_| |_| |___/ (_)'), nl,
 	write(' |_|                  |___/                                                                  ').
 
-
-
-
-
-
-     
-           
