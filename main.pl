@@ -47,8 +47,8 @@ get_level(_-Level2, 2, Level2).
 
 play :-
 	% handle_main_menu(Level1-Level2),
-	Level1 is 8,
-	Level2 is 1,
+	Level1 is 0,
+	Level2 is 0,
 	initial(GameState),
 	play(GameState, Level1-Level2, 1).
 
