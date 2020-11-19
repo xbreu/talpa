@@ -1,9 +1,9 @@
 :-consult('input.pl').
 
-handle_main_menu(Level) :-
+handle_main_menu(Level_O-Level_X) :-
         display_main_menu, 
         getInputInt('Choose a option [1-2] >> ', 1, 3, Option), 
-        handle_main_menu_options(Option, Level).
+        handle_main_menu_options(Option, Level_O-Level_X).
 
 % to change. 
 handle_main_menu_options(1, Level):- !,
@@ -14,9 +14,11 @@ handle_main_menu_options(1, Level):- !,
 handle_main_menu_option(2, _):-
         halt. 
 
-handle_level_menu(Level):- 
-        display_level_menu, 
-        getInputInt('Choose a level [1-9] >>', 1 , 10, Level).
+handle_level_menu(Level_O-Level_X):- 
+        display_level_menu(1), 
+        getInputInt('Choose a level [1-9] or type 0 >>', 0 , 10, Level_O),
+        display_level_menu(2), 
+        getInputInt('Choose a level [1-9] or type 0>>', 0 , 10, Level_X). 
 
 
 % ----------------------------------------------- 
@@ -49,9 +51,9 @@ display_main_options :-
 %  Level Menu        
 % ----------------------------------------------- 
 
-display_level_menu :-
+display_level_menu(Player) :-
         display_level_title,
-        display_level_options. 
+        display_level_options(Player). 
 
 display_level_title :-
         menu_delimitation, nl,
@@ -66,11 +68,16 @@ display_level_title :-
         menu_empty_line, nl,
         menu_empty_line, nl.  
    
-display_level_options :-
+display_level_options(Player) :-
+        code(Player, Code), 
         menu_empty_line, nl, 
-        write('|  Choose a value for the for the level [\'0-9\']   |        '),nl,
-        write('| * If two digits are written, just the first one |        '),nl,
-        write('|   will be considered                            |        '),nl,
+        format('|         CONFIGURATIONS FOR PLAYER ~w             |        ', Code),nl,
+        menu_empty_line, nl, 
+        write('|  - To play as HUMAN type 0.                     |        '),nl,
+        write('|  - To choose a BOT type the level [\'0-9\']       |        '),nl,
+        write('|  - If two digits are written, just the first    |        '),nl,
+        write('|    one will be considered                       |        '),nl,
+
         menu_empty_line, nl, 
         menu_empty_line, nl, 
         menu_delimitation, nl. 

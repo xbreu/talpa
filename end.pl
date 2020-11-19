@@ -44,20 +44,20 @@ game_over_vertical(Board) :-
 % ----------------------------------------------------------------
 
 % if in the last move both players achieve the goal the last player loses
-game_over(Board, X, Y) :-
-	horizontal_player(X),
+game_over(Player-Board, Winner) :-
+	horizontal_player(Player),
 	game_over_vertical(Board), !,
-	vertical_player(Y).
+	vertical_player(Winner).
 
-game_over(Board, X, Y) :-
-	vertical_player(X),
+game_over(Player-Board, Winner) :-
+	vertical_player(Player),
 	game_over_horizontal(Board), !,
-	horizontal_player(Y).
+	horizontal_player(Winner).
 
-game_over(Board, X, X) :-
-	horizontal_player(X),
+game_over(Player-Board, Player) :-
+	horizontal_player(Player),
 	game_over_horizontal(Board).
 
-game_over(Board, X, X) :-
-	vertical_player(X),
+game_over(Player-Board, Player) :-
+	vertical_player(Player),
 	game_over_vertical(Board).
