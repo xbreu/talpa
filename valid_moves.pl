@@ -12,6 +12,7 @@ valid_moves(GameState, Player, ListOfMoves):-
         valid_moves_asdw(GameState, Player, ListOfMoves), 
         ListOfMoves \= [], !. 
 
+
 %TODO: test this function. 
 valid_moves(GameState, Player, ListOfMoves):- !,
         findall(NewGameState, (   member(Letter, ['r']), 
