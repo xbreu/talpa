@@ -13,10 +13,22 @@ columns(List, Len) :-
 columns(Length) :-
 	columns([], Length).
 
-get_board_matrix(Board, Matrix) :-
+add_line_symbols([], _, []).
+
+add_line_symbols([Head | Tail], Number, [[NumberEncoded | Head] | Recursion]) :-
+	Number1 is Number + 1,
+	NumberEncoded is - Number,
+	add_line_symbols(Tail, Number1, Recursion).
+
+add_line_symbols(Matrix, ResultMatrix) :-
+	add_line_symbols(Matrix, 0, ResultMatrix).
+
+get_board_matrix(Board, BoardMatrix) :-
 	numberOfCols(N),
 	columns(ColumnList, N),
-	append([ColumnList], Board, Matrix).
+	append([ColumnList], Board, Matrix),
+	add_line_symbols(Matrix, BoardMatrix).
+	% print(BoardMatrix).
 
 print_board(Board) :-
 	get_board_matrix(Board, Matrix),
@@ -50,8 +62,7 @@ print_row([]) :-
 	new_line.
 print_row([H|T]) :-
 	vertical,
-	code(H,C),
-	print_cell(C),
+	print_cell(H),
 	print_row(T).
 
 print_middle_row(R) :-
@@ -104,10 +115,20 @@ print_last_line(X) :-
 %	Cells
 % -----------------------------------------------
 
-print_cell(C) :-
-    padding,
-    write(C),
-    padding.
+print_cell(Number) :-
+	number(Number),
+	Number < 0, !,
+	RealNumber is - Number,
+	print_cell_content(RealNumber).
+
+print_cell(H) :-
+    code(H, C),
+    print_cell_content(C).
+
+print_cell_content(Content) :-
+	padding,
+	write(Content),
+	padding.
 
 % -----------------------------------------------
 %	Padding
