@@ -99,4 +99,5 @@ is_adjacent_in_row([StartCol, StartRow], [PreviousCol, StartRow]):-
 is_adjacent_in_col([StartCol, StartRow], [StartCol, NextRow]):- 
 	NextRow is StartRow +1, !.
 is_adjacent_in_col([StartCol, StartRow], [StartCol, PreviousRow]):-
-	PreviousRow is StartRow -1. 
+	PreviousRow is StartRow -1.  
+

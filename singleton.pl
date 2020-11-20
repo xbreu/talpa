@@ -3,10 +3,10 @@
 % -----------------------------------------------
 
 % Determines the number of lines in the game.
-numberOfLines(4).
+numberOfLines(8).
 
 % Determines the number of columns in the game. 
-numberOfCols(4).
+numberOfCols(8).
 
 % Size of padding on the board
 padding_size(1).
