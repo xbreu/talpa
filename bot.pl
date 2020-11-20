@@ -13,7 +13,12 @@
  +Player        : Current player. 
  +Level         : Difficulty level. 
  -Move          : The move chosen randomly, but according to the level.
-*/ 
+*/  
+
+choose_move(GameState, Player, 1, Move):- 
+        valid_moves(GameState, Player, ListOfMoves),   
+        random_list(ListOfMoves, Move), !. 
+
 choose_move(GameState, Player, Level, Move):- !, 
         valid_moves(GameState, Player, ListOfMoves),                                                                    % get all possible moves 
         setof(Value-NextState, (member(NextState, ListOfMoves),value(NextState, Player, Value)), ValuesMovesList),      % get game moves and its respectives values  
@@ -49,14 +54,11 @@ choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):-
  -Value                 : Retrieved value. 
 */                                                  
 choose_value_by_level(ValuesList, Level, Value):-
-        len(ValuesList, Size), 
-        Size =< Level, 
-        nth1(Size, ValuesList, Value). 
-
-choose_value_by_level(ValuesList, Level, Value):- 
-        len(ValuesList, Size), 
-        Size > Level, 
-        nth1(Level, ValuesList, Value). 
+        len(ValuesList, Size),  
+        Pos is (Size + Level - 9), !,  
+        NewPos is max(Pos, 1), 
+        nth1(NewPos, ValuesList, Value), 
+        write(Size). 
         
 
 
