@@ -44,10 +44,13 @@ print_board(Board) :-
 % Main function to print the matrix.
 print_matrix([]).
 print_matrix([H|T]) :-
+	print_first_row(H),
+	beginning_of_line,
 	top_left_intersection,
     len(H, L),
-    print_first_line(L),
-    print_middle_matrix([H|T]).
+    RealSize is L - 1,
+    print_first_line(RealSize),
+    print_middle_matrix(T).
 
 % Function that prints the matrix of the game except for the first row.
 print_middle_matrix([H|[]]) :- !,
@@ -61,28 +64,44 @@ print_middle_matrix([H|T]) :-
 % ----------------------------------------------- 
 
 print_row([]) :-
-	vertical,
 	new_line.
 print_row([H|T]) :-
-	vertical,
 	print_cell(H),
+	vertical,
 	print_row(T).
+
+print_first_row([]) :-
+	print_row([]).
+print_first_row([H|T]) :-
+	print_cell(H),
+	write(' '),
+	print_first_row(T).
+
 
 print_middle_row(R) :-
     print_row(R),
+   	beginning_of_line,
     left_intersection,
     len(R, L),
-    print_middle_line(L).
+    RealSize is L - 1,
+    print_middle_line(RealSize).
 
 print_last_row(R) :-
     print_row(R),
+   	beginning_of_line,
     bottom_left_intersection,
     len(R, L),
-    print_last_line(L).
+    RealSize is L - 1,
+    print_last_line(RealSize).
 
 % -----------------------------------------------
 %	Lines
 % -----------------------------------------------
+
+beginning_of_line :-
+	padding_size(X),
+    X3 is X * 3,
+    print_chars(X3, ' ').
 
 print_first_line(1) :- !,
 	print_horizontal,
