@@ -124,15 +124,15 @@ orthogonal_row_length([CurrCol, CurrLine], Board, 0):-
 orthogonal_row_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells):-
         adjacent_cell([CurrCol, CurrLine], [NewCol, NewLine]),
         can_visit_adjacent([NewCol, NewLine], Visited, Board),          
-        is_adjacent_in_row([CurrCol, CurrLine], [NewCol, NewLine]), !,  
-        NewAccNumCells is AccNumCells +1, 
+        is_adjacent_in_row([CurrCol, CurrLine], [NewCol, NewLine]), !,
+        NewAccNumCells is AccNumCells +1,
         orthogonal_row_length([NewCol, NewLine], Board, [[CurrCol, CurrLine]|Visited], NumCells, NewAccNumCells).  
                     
 % The next cell we can visit doesn't add an horizontal cell. 
 orthogonal_row_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells):-
         adjacent_cell([CurrCol, CurrLine], [NewCol, NewLine]),
         can_visit_adjacent([NewCol, NewLine], Visited, Board),          
-        \+is_adjacent_in_row([CurrCol, CurrLine], [NewCol, NewLine]), !,  
+        \+is_adjacent_in_row([CurrCol, CurrLine], [NewCol, NewLine]), !,
         orthogonal_row_length([NewCol, NewLine], Board, [[CurrCol, CurrLine]|Visited], NumCells, AccNumCells).  
 
 % If no other cell can be visit, ends the recursion. 
