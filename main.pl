@@ -69,20 +69,22 @@ find_biggest_lines(Board, Visited, ResultCol-ResultRow) :-
 	get_first_not_visited(Visited, Cell),
 	calculate_path(Board, Cell, Visited, NewVisited, AuxMinCol-AuxMinRow-AuxMaxCol-AuxMaxRow),
 	find_biggest_lines(Board, NewVisited, NewCol-NewRow),
-	ResultCol is max(AuxMaxCol, NewCol),
-	ResultRow is max(AuxMaxRow, NewRow).
+	AuxCol is AuxMaxCol - AuxMinCol + 1,
+	AuxRow is AuxMaxRow - AuxMinRow + 1,
+	ResultCol is max(AuxCol, NewCol),
+	ResultRow is max(AuxRow, NewRow).
 
 find_biggest_lines(Board, Result) :-
 	find_biggest_lines(Board, [], Result).
 
 test_board([[1, 1, 1, 1, 1, 0, 1, 0],
 			[1, 1, 0, 1, 0, 1, 1, 0],
-			[1, 0, 0, 0, 0, 0, 0, 0],
+			[1, 0, 0, 0, 0, 0, 0, 1],
 			[1, 0, 0, 2, 1, 1, 1, 0],
-			[1, 0, 1, 0, 0, 0, 1, 0],
+			[1, 1, 1, 0, 0, 0, 1, 0],
 			[1, 0, 0, 0, 1, 1, 1, 0],
-			[1, 0, 0, 1, 1, 0, 1, 1],
-			[1, 1, 1, 1, 0, 1, 1, 0]]).
+			[1, 0, 0, 1, 1, 0, 1, 0],
+			[1, 1, 1, 1, 0, 1, 1, 1]]).
 run_test :-
 	test_board(Board),
 	find_biggest_lines(Board, Result),
