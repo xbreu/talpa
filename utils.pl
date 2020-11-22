@@ -30,6 +30,12 @@ sumList([X|L], Sum) :-
 % Matrix functions
 % -----------------------------------------------
 
+not_empty_cell(Board, Cell) :-
+	\+empty_cell(Board, Cell).
+
+empty_cell(Board, Col-Row) :-
+	\+getValueInMatrix(Board, Row, Col, 0).
+
 % Gets the value inside a matrix.
 % getValueInMatrix(+GameState, +Line, +Col, -Value).
 % +GameState	: Board of the game.
