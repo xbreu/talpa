@@ -121,23 +121,13 @@ Para que a avaliação do tabuleiro possa ser descrita de maneira lógica e suci
 
 Na implementação da função de avaliação de jogo é considerado que `v(o, Board) = -v(x,Board)`. Logo, caso `v(o, Board)` seja positivo, podemos afirmar que o jogador `o` está com a vantagem na partida.  
 
-Para representar a avaliação do tabuleiro na perspectiva do jogador `o` tome em conta a seguinte fórmula:  
+Para representar a avaliação do tabuleiro na perspectiva do jogador `o` é usada a seguinte fórmula: `maior(hps) - maior(vps)`, onde `hps` é o maior tamanho horizontal de um path e `vps` é o maior tamanho vertical.
 
-![](https://i.imgur.com/jdWWM16.png)
-
-Onde:   
-
-- `horizontal` é o valor da avaliação numérica do tabuleiro.  
-- `nPaths` é o número de caminhos (um caminho é um conjunto de células conectadas ortogonalmente).  
-- `nCells_i` é o número de células num determinado caminho i.   
-- `hps_i` é o tamanho horizontal do caminho i (horizontal path size).   
-- `vps_i` é o tamanho vertical do caminho i (vertical path size).  
-
-Para exemplificar o que é um Path, veja que que no tabuleiro a seguir há 2 paths:  
+Para exemplificar o que é um path, veja que que no tabuleiro a seguir há 2 paths:  
 
 ![](https://i.imgur.com/EgnpAgC.png)
 
-A path 1 possui `hps = 2` e `vps = 3`. Já a path 2, por ser uma célula única tem `hps = 1` e `vps = 1`.   
+A path 1 possui `hps = 2` e `vps = 3`. Já a path 2, por ser uma célula única tem `hps = 1` e `vps = 1`.
 
 ## Jogada do Computador
 
