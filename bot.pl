@@ -33,7 +33,7 @@ find_extreme_values([MCol-MRow-HCol-HRow-Visited | T], MinCol-MinRow-MaxCol-MaxR
 	MaxRow is max(HRow, Max1Row),
 	append(Visited, SubvisitedAux, Subvisited).
 
-calculate_paths(_, CellCol-CellRow, [], Visited, Visited, CellCol-CellRow-CellCol-CellRow).
+calculate_paths(_, CellCol-CellRow, [], Visited, [CellCol-CellRow | Visited], CellCol-CellRow-CellCol-CellRow).
 
 calculate_paths(Board, _, Adjs, Visited, Subvisited, RealMinCol-RealMinRow-RealMaxCol-RealMaxRow) :-
 	member(AdjCol-AdjRow, Adjs),
@@ -42,6 +42,9 @@ calculate_paths(Board, _, Adjs, Visited, Subvisited, RealMinCol-RealMinRow-RealM
 	RealMinRow is min(AuxMinRow, AdjRow),
 	RealMaxCol is max(AuxMaxCol, AdjCol),
 	RealMaxRow is max(AuxMaxRow, AdjRow).
+
+calculate_path(Board, Col-Row, Visited, [Col-Row | Visited], 1-1-1-1) :-
+	\+getValueInMatrix(Board, Row, Col, 0), !.
 
 calculate_path(Board, Col-Row, Visited, Subvisited, MinValueCol-MinValueRow-MaxValueCol-MaxValueRow) :-
 	findall(Adj, get_valid_adjacent(Board, Col-Row, [Col-Row | Visited], Adj), AdjacentList),
@@ -56,7 +59,7 @@ find_biggest_lines(_, Visited, 0-0) :-
 	numberOfCols(C),
 	numberOfLines(L),
 	len(Visited, V),
-	V is C * L.
+	V is C * L, !.
 
 find_biggest_lines(Board, Visited, ResultCol-ResultRow) :-
 	get_first_not_visited(Visited, Cell),
@@ -67,11 +70,8 @@ find_biggest_lines(Board, Visited, ResultCol-ResultRow) :-
 	ResultCol is max(AuxCol, NewCol),
 	ResultRow is max(AuxRow, NewRow).
 
-find_biggest_lines(Board, Result) :-
-	find_biggest_lines(Board, [], Result).
-
 get_all_values(Board, HorizontalValue, VerticalValue) :-
-	find_biggest_lines(Board, HorizontalValue-VerticalValue).
+	find_biggest_lines(Board, [], HorizontalValue-VerticalValue), !.
 
 % -----------------------------------------------
 %  Choose move         
