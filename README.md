@@ -121,13 +121,14 @@ Para que a avaliação do tabuleiro possa ser descrita de maneira lógica e suci
 
 Na implementação da função de avaliação de jogo é considerado que `v(o, Board) = -v(x,Board)`. Logo, caso `v(o, Board)` seja positivo, podemos afirmar que o jogador `o` está com a vantagem na partida.  
 
-Para representar a avaliação do tabuleiro na perspectiva do jogador `o` é usada a seguinte fórmula: `maior(hps) - maior(vps)`, onde `hps` é o maior tamanho horizontal de um path e `vps` é o maior tamanho vertical.
+Para representar a avaliação do tabuleiro na perspectiva do jogador `o` é usada a seguinte fórmula: `value = maior(hps) - maior(vps)`, onde `hps` é o maior tamanho horizontal de um path e `vps` é o maior tamanho vertical.
 
 Para exemplificar o que é um path, veja que que no tabuleiro a seguir há 2 paths:  
 
 ![](https://i.imgur.com/EgnpAgC.png)
 
-A path 1 possui `hps = 2` e `vps = 3`. Já a path 2, por ser uma célula única tem `hps = 1` e `vps = 1`.
+A path 1 possui `hps = 2` e `vps = 3`. Já a path 2, por ser uma célula única tem `hps = 1` e `vps = 1`.  
+Neste caso `value = maior(hps) - maior(vps) = max(2, 1) - max(3, 1) = 2 - 3 = -1`.
 
 ## Jogada do Computador
 
