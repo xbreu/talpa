@@ -6,7 +6,7 @@
 :- consult('end.pl'). 
 :- consult('bot.pl').
 :- consult('input.pl').
-:- consult('menu.pl'). 
+:- consult('menu.pl').
 
 % -----------------------------------------------
 %	Display game 
@@ -59,4 +59,3 @@ play(GameState, Levels, Player) :-
 play(GameState, Levels, Player) :-
 	print('Invalid move!\n'),
 	play(GameState, Levels, Player).
-
