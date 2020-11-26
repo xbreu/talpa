@@ -55,24 +55,24 @@ calculate_path(Board, Col-Row, Visited, Subvisited, MinValueCol-MinValueRow-MaxV
 calculate_path(Board, Cell, Visited, ExtremeValues) :-
 	calculate_path(Board, Cell, [], Visited, ExtremeValues).
 
-find_biggest_lines(_, Visited, 0-0) :-
+find_biggest_lines(_, _, Visited, 0-0) :-
 	numberOfCols(C),
 	numberOfLines(L),
 	len(Visited, V),
 	V is C * L, !.
 
-find_biggest_lines(Board, Visited, ResultCol-ResultRow) :-
-	get_first_not_visited(Visited, Cell),
+find_biggest_lines(Board, LastCell, Visited, ResultCol-ResultRow) :-
+	get_first_not_visited(Visited, LastCell, Cell),
 	calculate_path(Board, Cell, [], AuxNewVisited, AuxMinCol-AuxMinRow-AuxMaxCol-AuxMaxRow),
 	append(Visited, AuxNewVisited, NewVisited),
-	find_biggest_lines(Board, NewVisited, NewCol-NewRow),
+	find_biggest_lines(Board, Cell, NewVisited, NewCol-NewRow),
 	AuxCol is AuxMaxCol - AuxMinCol + 1,
 	AuxRow is AuxMaxRow - AuxMinRow + 1,
 	ResultCol is max(AuxCol, NewCol),
 	ResultRow is max(AuxRow, NewRow).
 
 get_all_values(Board, HorizontalValue, VerticalValue) :-
-	find_biggest_lines(Board, [], HorizontalValue-VerticalValue), !.
+	find_biggest_lines(Board, 0-0, [], HorizontalValue-VerticalValue), !.
 
 % -----------------------------------------------
 %  Choose move         
