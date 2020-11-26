@@ -63,7 +63,8 @@ find_biggest_lines(_, Visited, 0-0) :-
 
 find_biggest_lines(Board, Visited, ResultCol-ResultRow) :-
 	get_first_not_visited(Visited, Cell),
-	calculate_path(Board, Cell, Visited, NewVisited, AuxMinCol-AuxMinRow-AuxMaxCol-AuxMaxRow),
+	calculate_path(Board, Cell, [], AuxNewVisited, AuxMinCol-AuxMinRow-AuxMaxCol-AuxMaxRow),
+	append(Visited, AuxNewVisited, NewVisited),
 	find_biggest_lines(Board, NewVisited, NewCol-NewRow),
 	AuxCol is AuxMaxCol - AuxMinCol + 1,
 	AuxRow is AuxMaxRow - AuxMinRow + 1,
