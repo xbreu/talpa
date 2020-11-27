@@ -58,7 +58,7 @@ calculate_path(Board, Cell, Visited, ExtremeValues) :-
 find_biggest_lines(_, _, Visited, 0-0) :-
 	numberOfCols(C),
 	numberOfLines(L),
-	len(Visited, V),
+	length(Visited, V),
 	V is C * L, !.
 
 find_biggest_lines(Board, LastCell, Visited, ResultCol-ResultRow) :-
@@ -127,7 +127,7 @@ choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):-
  -Value                 : Retrieved value. 
 */                                                  
 choose_value_by_level(ValuesList, Level, Value):-
-        len(ValuesList, Size),  
+        length(ValuesList, Size),
         Pos is (Size + Level - 9), !,  
         NewPos is max(Pos, 1), 
         nth1(NewPos, ValuesList, Value), 
