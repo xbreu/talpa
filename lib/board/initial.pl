@@ -1,4 +1,4 @@
-:- consult('singleton.pl'). 
+:- consult('../variables.pl').
 
 % ----------------------------------------------- 
 %  Init game 	

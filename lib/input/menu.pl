@@ -18,7 +18,7 @@ handle_level_menu(Level_X-Level_O):-
         display_level_menu(1), 
         getInputInt('Choose a level [1-9] or type 0 >>', 0 , 10, Level_X),
         display_level_menu(2), 
-        getInputInt('Choose a level [1-9] or type 0>>', 0 , 10, Level_O).
+        getInputInt('Choose a level [1-9] or type 0 >>', 0 , 10, Level_O).
 
 
 % ----------------------------------------------- 

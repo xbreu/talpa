@@ -1,5 +1,5 @@
-:- consult('singleton.pl').
-:- consult('utils.pl').
+:- consult('../variables.pl').
+:- consult('../utils.pl').
 
 % -----------------------------------------------
 % Board matrix construction

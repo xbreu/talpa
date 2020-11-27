@@ -1,6 +1,6 @@
 :- use_module(library(lists)).
-:- consult('utils.pl').
-:- consult('singleton.pl'). 
+:- consult('../utils.pl').
+:- consult('../variables.pl').
 
 % ----------------------------------------------- 
 %  Main function for make a move 	

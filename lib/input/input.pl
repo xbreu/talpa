@@ -1,5 +1,5 @@
-:- consult('utils.pl'). 
-:- consult('singleton.pl').
+:- consult('../utils.pl').
+:- consult('../variables.pl').
 
 % -----------------------------------------------
 % Input of actual cell 
