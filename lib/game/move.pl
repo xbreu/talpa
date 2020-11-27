@@ -6,16 +6,13 @@
 %  Main function for make a move 	
 % ----------------------------------------------- 
 
-/*
- Make a movement if valid. If letter is 'r' we need to remove an piece.  
-
- move(+GameState, +Move, +NewGameState)
- +Gamestate 	: Actual GameState. 
- +RealLine 	: Line represented from 0 to number of lines in the board. 
- +RealCol 	:  Column represented from 0 to the number of columns in the board. 
- +Letter 	: One of a,s,d,w. Representing the direction of the movement.
- -NewGameState : Return value of the new game state. 
-*/
+% Make a movement if valid. If letter is 'r' we need to remove an piece.
+% move(+GameState, +Move, +NewGameState)
+% +Gamestate 	: Actual GameState.
+% +RealLine 	: Line represented from 0 to number of lines in the board.
+% +RealCol 	:  Column represented from 0 to the number of columns in the board.
+% +Letter 	: One of a,s,d,w. Representing the direction of the movement.
+% -NewGameState : Return value of the new game state.
 
 % Remove a peace case there isn't any moves to do.
 move(GameState, [RealLine-RealCol, 'r'], NewGameState):- !,
@@ -35,22 +32,18 @@ move(GameState, [RealLine-RealCol, Letter], NewGameState):- !,
 % Functions get line and col of captured cell 
 % ----------------------------------------------- 
 
-/**
- Gets the line and col of the cell to be captured. Assumes that +Line and +Col are valid.
- 
- validCapture(+GameState, +Direction, +Line, +Col, +NewLine, +NewCol)
- + GameState 	: The actual game board. 
- + Direction 	: The direction of the movement.
- + Line		: The actual line of the player. 
- + Col 		: The atual col of the player. 
- + NewLine	: The new line of the player. 
- + NewCol	: The new column of the player. 
-*/  
+% Gets the line and col of the cell to be captured. Assumes that +Line and +Col are valid.
+% validCapture(+GameState, +Direction, +Line, +Col, +NewLine, +NewCol)
+% + GameState 	: The actual game board.
+% + Direction 	: The direction of the movement.
+% + Line		: The actual line of the player.
+% + Col 		: The atual col of the player.
+% + NewLine	: The new line of the player.
+% + NewCol	: The new column of the player.
 capture(GameState, 'w', Line, Col, NewLine, Col):-  !,  
 	NewLine is Line -1, 
 	validLine(NewLine),
 	distinctPlayer(GameState, Line, Col, NewLine, Col).
-	
 
 capture(GameState, 's', Line, Col, NewLine, Col):-  !,  
 	NewLine is Line +1, 
@@ -67,18 +60,14 @@ capture(GameState, 'a', Line, Col, Line, NewCol):- !,
 	validCol(NewCol),
 	distinctPlayer(GameState, Line, Col, Line, NewCol). 
 
-
-/**
- Verifies if two cells have distinct player, if yes returns yes, otherwise returns no. 
- If one of the cells has no player, then it fails. 
-
- distinctPlayer(+GameState, +Line, +Col, +CaptureLine, +CaptureCol) 
- +GameState	: The actual game board. 
- +Line		: Line of the actual player. 
- +Col		: Column of the actual player.
- +CaptureLine	: Line of the player being captured or another cell. 
- +CaptureCol	: Col of the player being captured or another cell.  
-*/ 
+% Verifies if two cells have distinct player, if yes returns yes, otherwise returns no.
+% If one of the cells has no player, then it fails.
+% distinctPlayer(+GameState, +Line, +Col, +CaptureLine, +CaptureCol)
+% +GameState	: The actual game board.
+% +Line		: Line of the actual player.
+% +Col		: Column of the actual player.
+% +CaptureLine	: Line of the player being captured or another cell.
+% +CaptureCol	: Col of the player being captured or another cell.
 distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):-
 	getValueInMatrix(GameState, Line, Col, ActualPlayer),
 	getValueInMatrix(GameState, CaptureLine, CaptureCol, CapturedPlayer), 
@@ -90,13 +79,10 @@ distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):-
 % Functions for validation of position
 % -----------------------------------------------
 
-/**
- validPos(+Line, +Col). 
- 
- Checks if the position if valid in a matrix. 
- +Line		: Line in matrix. 
- +Col 		: Column in matrix. 
-*/ 
+% validPos(+Line, +Col).
+% Checks if the position if valid in a matrix.
+% +Line		: Line in matrix.
+% +Col 		: Column in matrix.
 validPos(Line, Col):-
 	validLine(Line),
 	validCol(Col).   

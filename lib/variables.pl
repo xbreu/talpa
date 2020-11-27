@@ -25,4 +25,6 @@ code(0,' ') :- !.
 % player codes
 code(1,'\x00445\') :- !.
 code(2,'\x25CF\') :- !.
+
+% if the cell does not have a piece of any player and is not empty prints the value itself
 code(X, X).

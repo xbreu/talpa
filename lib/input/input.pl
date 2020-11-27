@@ -5,38 +5,29 @@
 % Input of actual cell 
 % ----------------------------------------------- 
 
-/**
- Get the line and column as input of determine player.  
-
- getCellInput(+Player, -Line, -Col). 
- +Player 	: Number of the player.
- -Line		: Line read from input. 
- -Col		: Column read from input.   
- */
+% Get the line and column as input of determine player.
+% getCellInput(+Player, -Line, -Col).
+% +Player 	: Number of the player.
+% -Line		: Line read from input.
+% -Col		: Column read from input.
 getCellInput(Player, Line, Col):-       
 	printPlayerTurn(Player),  
 	getCellLine(Line), 
 	getCellCol(Col).
 
-/**
- Gets the line as input of determine player with error treatment. 
- It will returns if the player gives a valid input. 
-
- getCellLine(-Line).   
- */ 	
+% Gets the line as input of determine player with error treatment.
+% It will returns if the player gives a valid input.
+% getCellLine(-Line).
 getCellLine(RealLine):- 
 	numberOfLines(MaxLines),
 	RealMaxLines is MaxLines + 1,
 	getInputInt('LINE >>  ', 1, RealMaxLines, Line),
 	getRealLine(Line, RealLine).  
 
-/**
- Gets the column as input of determine player with error treatment. 
- It will returns if the player gives a valid input. 
-
- getCellCol(-RealCol).   
- */
-getCellCol(RealCol):- 
+% Gets the column as input of determine player with error treatment.
+% It will returns if the player gives a valid input.
+% getCellCol(-RealCol).
+getCellCol(RealCol):-
 	numberOfCols(MaxCols),  
 	print('COL >> '), 
 	get_char(Col),     
@@ -69,24 +60,20 @@ getRealInput(Line, Col, RealLine, RealCol):-
 	getRealLine(Line, RealLine), 
 	getRealCol(Col, RealCol).
 
-/** 
- Converts input line to list position.
- 
- getRealLine(+Line, -RealLine). 
- +Line		: The Line from input. 
- -RealLine	: The line of the +Line in matrix. 
-*/
+% Converts input line to list position.
+%
+% getRealLine(+Line, -RealLine).
+% +Line		: The Line from input.
+% -RealLine	: The line of the +Line in matrix.
 getRealLine(Line, RealLine):-  
 	numberOfLines(NumLines), 
 	RealLine is NumLines - Line. 
 
-/**
- Converts input column to list position.
- 
- getRealCol(+Col, -RealCol).
- +Col 		:The Col from input. 
- -RealCol	: The column of the +Col in matrix.     
- */ 
+% Converts input column to list position.
+%
+% getRealCol(+Col, -RealCol).
+% +Col 		:The Col from input.
+% -RealCol	: The column of the +Col in matrix.
 getRealCol(Col, RealCol):-
 	char_code(Col, X),    
 	RealCol is X-97. 
@@ -94,15 +81,14 @@ getRealCol(Col, RealCol):-
 % -----------------------------------------------
 % Get Any input int	
 % -----------------------------------------------
-/** 
- Get a valid input between a range. 
- 
- getInputInt(+Line, -RealLine). 
- +Label		: The Label for the input. 
- +Floor		: Min value that can be chosen. 
- +Ceil 		: Max value (not including it self) that can be chosen. 
- -Value 	: Valid value input. 
-*/
+
+% Get a valid input between a range.
+%
+% getInputInt(+Line, -RealLine).
+% +Label		: The Label for the input.
+% +Floor		: Min value that can be chosen.
+% +Ceil 		: Max value (not including it self) that can be chosen.
+% -Value 	: Valid value input.
 getInputInt(Label, Floor, Ceil, Value):-
 	format('~s\n', Label),
 	get_char(ValueChar), 
@@ -122,14 +108,12 @@ getInputInt(Label, Floor, Ceil, Value):-
 % Get Any input from selected options	
 % -----------------------------------------------
 
-/** 
- Get a valid input, where the input be one of the given options. 
- 
- getInputOpt(+Label, +Options, -Value). 
- +Label		: Label for the input. 
- +Options	: Options of which the input must belong.
- -Value		: The valid input.  
-*/
+% Get a valid input, where the input be one of the given options.
+%
+% getInputOpt(+Label, +Options, -Value).
+% +Label		: Label for the input.
+% +Options	: Options of which the input must belong.
+% -Value		: The valid input.
 getInputOpt(Label, Options , Value):-
 	format('~s\n', Label), 
 	get_char(Value), 
