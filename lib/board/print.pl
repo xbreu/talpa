@@ -47,7 +47,7 @@ print_matrix([H|T]) :-
 	print_first_row(H),
 	beginning_of_line,
 	top_left_intersection,
-    len(H, L),
+    length(H, L),
     RealSize is L - 1,
     print_first_line(RealSize),
     print_middle_matrix(T).
@@ -82,7 +82,7 @@ print_middle_row(R) :-
     print_row(R),
    	beginning_of_line,
     left_intersection,
-    len(R, L),
+    length(R, L),
     RealSize is L - 1,
     print_middle_line(RealSize).
 
@@ -90,7 +90,7 @@ print_last_row(R) :-
     print_row(R),
    	beginning_of_line,
     bottom_left_intersection,
-    len(R, L),
+    length(R, L),
     RealSize is L - 1,
     print_last_line(RealSize).
 
