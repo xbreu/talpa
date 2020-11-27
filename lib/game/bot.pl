@@ -1,4 +1,4 @@
-:- consult('utils.pl'). 
+:- consult('../utils.pl').
 :- consult('valid_moves.pl'). 
 
 get_valid_adjacent(Board, Col-Row, Visited, AdjCol-AdjRow) :-

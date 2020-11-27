@@ -1,12 +1,13 @@
-:- consult('print.pl'). 
-:- consult('initial.pl').  
-:- consult('utils.pl').  
-:- consult('move.pl'). 
-:- consult('valid_moves.pl'). 
-:- consult('end.pl'). 
-:- consult('bot.pl').
-:- consult('input.pl').
-:- consult('menu.pl').
+:- consult('lib/utils.pl').
+:- consult('lib/board/cells.pl').
+:- consult('lib/board/print.pl').
+:- consult('lib/board/initial.pl').
+:- consult('lib/game/move.pl').
+:- consult('lib/game/valid_moves.pl').
+:- consult('lib/game/end.pl').
+:- consult('lib/game/bot.pl').
+:- consult('lib/input/input.pl').
+:- consult('lib/input/menu.pl').
 
 % -----------------------------------------------
 %	Display game 
