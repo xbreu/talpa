@@ -25,6 +25,10 @@ getValidMovement(Board, Player, Row, Column, Direction) :-
 	indicateNoMovementsFromPiece,
 	getValidMovement(Board, Player, Row, Column, Direction).
 
+% -----------------------------------------------
+% Read direction
+% -----------------------------------------------
+
 getDirection(Valid, Direction) :-
 	requestDirection,
 	getCharOptions(Valid, Direction).
@@ -34,45 +38,46 @@ getDirection(Valid, Direction) :-
 	requestAfterInvalid,
 	getDirection(Valid, Direction).
 
-validMove(Board, OppositePlayer, w, AuxRow-Col) :-
+getValidDirections(Board, Player, Row-Col, List) :-
+	swap_players(Player, OppositePlayer),
+	findall(Direction, validDirection(Board, OppositePlayer, Direction, Row-Col), List),
+	List \= [].
+
+validDirection(Board, OppositePlayer, w, AuxRow-Col) :-
 	Row is AuxRow - 1,
 	getValueInMatrix(Board, Row, Col, OppositePlayer).
 
-validMove(Board, OppositePlayer, a, Row-AuxCol) :-
+validDirection(Board, OppositePlayer, a, Row-AuxCol) :-
 	Col is AuxCol - 1,
 	getValueInMatrix(Board, Row, Col, OppositePlayer).
 
-validMove(Board, OppositePlayer, s, AuxRow-Col) :-
+validDirection(Board, OppositePlayer, s, AuxRow-Col) :-
 	Row is AuxRow + 1,
 	getValueInMatrix(Board, Row, Col, OppositePlayer).
 
-validMove(Board, OppositePlayer, d, Row-AuxCol) :-
+validDirection(Board, OppositePlayer, d, Row-AuxCol) :-
 	Col is AuxCol + 1,
 	getValueInMatrix(Board, Row, Col, OppositePlayer).
-
-getValidDirections(Board, Player, Row-Col, List) :-
-	swap_players(Player, OppositePlayer),
-	findall(Direction, validMove(Board, OppositePlayer, Direction, Row-Col), List),
-	List \= [].
 
 % -----------------------------------------------
 % Read cell
 % -----------------------------------------------
 
 getCell(Board, Player, Row, Col) :-
-	readRow(AuxRow),
-	readCol(AuxCol),
-	getRealInput(AuxRow-AuxCol, Row-Col),
+	readRow(Row),
+	readCol(Col),
 	getValueInMatrix(Board, Row, Col, Player), !.
 
 getCell(Board, Player, Row, Col) :-
 	indicateInvalidPiece,
 	getCell(Board, Player, Row, Col).
 
-readRow(Row) :-
+readRow(Result) :-
 	numberOfLines(Max),
 	requestRow,
-	getIntInterval(1, Max, Row).
+	getIntInterval(1, Max, Row),
+	numberOfLines(NumLines),
+    Result is NumLines - Row.
 
 readCol(Result) :-
 	numberOfCols(MaxCols),
@@ -80,10 +85,10 @@ readCol(Result) :-
 	char_code(Max, Code),
 	requestCol,
 	getCharInterval('a', Max, Col),
-	Result is Col - 96.
+	Result is Col - 97.
 
 % -----------------------------------------------
-% Read Values
+% Read values
 % -----------------------------------------------
 
 getIntInterval(Min, Max, Value) :-
@@ -117,7 +122,7 @@ getCharOptions(Options, Value) :-
 	getCharOptions(Options, Value).
 
 % -----------------------------------------------
-% Read Characters
+% Read characters
 % -----------------------------------------------
 
 readDigit(Value) :-
@@ -131,18 +136,3 @@ readChar(Char) :-
 charToInt(Char, Value) :-
 	char_code(Char, ValueASCII),
     Value is ValueASCII - 48.
-
-% -----------------------------------------------
-% Get real input
-% -----------------------------------------------
-
-getRealInput(Line-Col, RealLine-RealCol) :-
-	getRealLine(Line, RealLine),
-	getRealColumn(Col, RealCol).
-
-getRealLine(Line, RealLine):-  
-	numberOfLines(NumLines), 
-	RealLine is NumLines - Line.
-
-getRealColumn(Col, RealCol) :-
-	RealCol is Col - 1.
