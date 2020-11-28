@@ -17,6 +17,7 @@ getMovement_r(Board, Player, Row, Column) :-
 	indicateToRemove,
 	getCell(Board, Player, RawRow, RawCol),
 	getRealInput(RawRow, RawCol, Row, Column).
+
 getDirection(Valid, Direction) :-
 	requestDirection,
 	getCharOptions(Valid, Direction).
@@ -30,6 +31,16 @@ getDirection(Valid, Direction) :-
 % Read cell
 % -----------------------------------------------
 
+getCell(Board, Player, Row, Col) :-
+	readRow(Row),
+	readCol(Col),
+	getValueInMatrix(Board, Row, Col, Player), !.
+
+getCell(Board, Player, Row, Col) :-
+	indicateInvalidPiece,
+	requestAfterInvalid,
+	getCell(Board, Player, Row, Col).
+
 readRow(Row) :-
 	numberOfLines(Max),
 	requestRow,
@@ -41,16 +52,6 @@ readCol(Col) :-
 	char_code(Max, Code),
 	requestCol,
 	getCharInterval('a', Max, Col).
-
-getCell(Board, Player, Row, Col) :-
-	readRow(Row),
-	readCol(Col),
-	getValueInMatrix(Board, Row, Col, Player), !.
-
-getCell(Board, Player, Row, Col) :-
-	indicateInvalidPiece,
-	requestAfterInvalid,
-	getCell(Board, Player, Row, Col).
 
 % -----------------------------------------------
 % Read Values
@@ -90,13 +91,13 @@ getCharOptions(Options, Value) :-
 % Read Characters
 % -----------------------------------------------
 
-readChar(Char) :-
-	get_char(Char),
-    skip_line.
-
 readDigit(Value) :-
 	readChar(ValueChar),
 	charToInt(ValueChar, Value).
+
+readChar(Char) :-
+	get_char(Char),
+    skip_line.
 
 charToInt(Char, Value) :-
 	char_code(Char, ValueASCII),
