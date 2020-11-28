@@ -57,7 +57,8 @@ display_main_options :-
 % -----------------------------------------------
 display_level_menu(Player) :-
 	clear,
-	display_title(level),
+	menu_delimitation_top,
+	% display_title(level),
 	display_level_options(Player),
 	menu_delimitation_bottom.
 
@@ -106,8 +107,8 @@ createChars(N, C, Result) :-
 
 centralize(String, N, Normalizer, NormalizedString) :-
 	atom_length(String, L),
-	Dif is N - L,
-	Right is Dif // 2 + Dif mod 2,
+	Dif is N - L - 2,
+	Right is Dif // 2 + Dif mod 2 + 2,
 	Left is Dif // 2,
 	createChars(Right, Normalizer, RightString),
 	createChars(Left, Normalizer, LeftString),
