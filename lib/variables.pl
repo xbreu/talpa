@@ -1,11 +1,18 @@
 % -----------------------------------------------
+% Interface variables
+% -----------------------------------------------
+
+% Determines the language of the text.
+language(en).
+
+% -----------------------------------------------
 % Board variables
 % -----------------------------------------------
 
-% Determines the number of lines in the game.
+% Determines the number of lines in the game
 numberOfLines(8).
 
-% Determines the number of columns in the game.
+% Determines the number of columns in the game
 numberOfCols(8).
 
 % Size of padding on the board

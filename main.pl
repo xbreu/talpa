@@ -9,8 +9,6 @@
 :- consult('lib/input/input.pl').
 :- consult('lib/input/menu.pl').
 
-language(en).
-
 % -----------------------------------------------
 %	Display game 
 % ----------------------------------------------- 
@@ -23,7 +21,6 @@ display_game(GameState, Player) :-
 % +Player
 % -NewGameState
 make_move(GameState, 0, Player, NewGameState) :-
-	printPlayerTurn(Player),
 	valid_moves_asdw(GameState, Player, ListOfMoves), 		% check if it's necessary to remove a piece
 	ListOfMoves \= [], !, 
 	getMovement(GameState, Player, Row, Column, Direction),
