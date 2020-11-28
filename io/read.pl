@@ -1,7 +1,7 @@
 :- consult('ask.pl').
 :- consult('../utils/utils.pl').
 :- consult('../variables.pl').
-:- consult('../board/cells.pl').
+:- consult('../game/board/cells.pl').
 
 % -----------------------------------------------
 % Read movement
