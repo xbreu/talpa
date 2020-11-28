@@ -1,7 +1,7 @@
 :- use_module(library(lists)).
-:- consult('../board/cells.pl').
 :- consult('../utils.pl').
 :- consult('../variables.pl').
+:- consult('../board/cells.pl').
 
 % ----------------------------------------------- 
 %  Main function for make a move 	

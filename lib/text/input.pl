@@ -5,9 +5,9 @@ prompt :-
 	write(' >> ').
 
 indicationBefore :-
-	write('> ').
+	write('-- ').
 indicationAfter :-
-	write(' <'), nl.
+	write(' --'), nl.
 
 requestRow :-
 	language(Language),
