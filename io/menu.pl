@@ -5,16 +5,19 @@
 
 handle_main_menu(Level_X-Level_O) :-
     display_main_menu,
-    requestOption(1, 3),
-    getIntInterval(1, 3, Option), !,
+    requestOption(1, 4),
+    getIntInterval(1, 4, Option), !,
     handle_main_menu_options(Option, Level_X-Level_O).
 
 handle_main_menu_options(1, Level) :-
 	handle_level_menu(Level).
 handle_main_menu_options(2, Level):-
+	handle_board_menu,
+	handle_main_menu(Level).
+handle_main_menu_options(3, Level):-
 	handle_settings_menu,
 	handle_main_menu(Level).
-handle_main_menu_option(3, _):-
+handle_main_menu_option(4, _):-
 	halt.
 
 handle_level_menu(Level_X-Level_O):-
@@ -46,11 +49,13 @@ display_main_menu :-
 display_main_options :-
 	language(Language),
 	menuOptionPlay(Language, OptionPlay),
+	menuOptionDimensions(Language, OptionBoard),
 	menuOptionSettings(Language, OptionSettings),
 	menuOptionExit(Language, OptionExit),
 	formatToMenu('\x2502\       1) ', OptionPlay, []),
-	formatToMenu('\x2502\       2) ', OptionSettings, []),
-	formatToMenu('\x2502\       3) ', OptionExit, []).
+	formatToMenu('\x2502\       2) ', OptionBoard, []),
+	formatToMenu('\x2502\       3) ', OptionSettings, []),
+	formatToMenu('\x2502\       4) ', OptionExit, []).
         
 % ----------------------------------------------- 
 %  Level Menu        
