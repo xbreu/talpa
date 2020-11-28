@@ -7,29 +7,23 @@
 % Read movement
 % -----------------------------------------------
 
+getMovement_r(Board, Player, Row, Column) :-
+	indicatePlayerTurn(Player),
+	indicateToRemove,
+	getCell(Board, Player, Row, Column).
+
 getMovement(Board, Player, Row, Column, Direction) :-
 	indicatePlayerTurn(Player),
 	getValidMovement(Board, Player, Row, Column, Direction).
 
-getMovement_r(Board, Player, Row, Column) :-
-	indicatePlayerTurn(Player),
-	indicateToRemove,
-	getValidMovement(Board, Player, Row, Column).
-
 getValidMovement(Board, Player, Row, Column, Direction) :-
-	getCell(Board, Player, RawRow, RawCol),
-	getValidDirections(Board, Player, RawRow-RawCol, ListOfDirections),
-	ListOfDirections \= [],
-	getDirection(ListOfDirections, Direction),
-	getRealInput(RawRow-RawCol, Row-Column).
+	getCell(Board, Player, Row, Column),
+	getValidDirections(Board, Player, Row-Column, ListOfDirections),
+	getDirection(ListOfDirections, Direction).
 
 getValidMovement(Board, Player, Row, Column, Direction) :-
 	indicateNoMovementsFromPiece,
 	getValidMovement(Board, Player, Row, Column, Direction).
-
-getValidMovement(Board, Player, Row, Column) :-
-	getCell(Board, Player, RawRow, RawCol),
-	getRealInput(RawRow-RawCol, Row-Column).
 
 getDirection(Valid, Direction) :-
 	requestDirection,
@@ -58,18 +52,18 @@ validMove(Board, OppositePlayer, d, Row-AuxCol) :-
 
 getValidDirections(Board, Player, Row-Col, List) :-
 	swap_players(Player, OppositePlayer),
-	getRealInput(Row-Col, RealRow-RealCol),
-	findall(Direction, validMove(Board, OppositePlayer, Direction, RealRow-RealCol), List).
+	findall(Direction, validMove(Board, OppositePlayer, Direction, Row-Col), List),
+	List \= [].
 
 % -----------------------------------------------
 % Read cell
 % -----------------------------------------------
 
 getCell(Board, Player, Row, Col) :-
-	readRow(Row),
-	readCol(Col),
-	getRealInput(Row-Col, RealRow-RealCol),
-	getValueInMatrix(Board, RealRow, RealCol, Player), !.
+	readRow(AuxRow),
+	readCol(AuxCol),
+	getRealInput(AuxRow-AuxCol, Row-Col),
+	getValueInMatrix(Board, Row, Col, Player), !.
 
 getCell(Board, Player, Row, Col) :-
 	indicateInvalidPiece,
