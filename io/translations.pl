@@ -15,6 +15,7 @@ indicateNoMovesString(en, 'No captures available, remove a piece').
 indicateInvalidDomainString(en, 'Value must be between [~w-~w]').
 indicateNotMemberString(en, 'Value must be one of ~w').
 menuOptionPlay(en, 'Play').
+menuOptionDimensions(en, 'Board Dimensions').
 menuOptionSettings(en, 'Language').
 menuOptionExit(en, 'Exit').
 menuConfigurationsForPlayer(en, 'CONFIGURATIONS FOR PLAYER ~w').
@@ -41,6 +42,7 @@ indicateNoMovesString(pt, 'N\x00E3\o existem capturas dispon\x00ED\veis, remova 
 indicateInvalidDomainString(pt, 'O valor deve pertencer ao intervalo [~w-~w]').
 indicateNotMemberString(pt, 'O valor deve ser um de ~w').
 menuOptionPlay(pt, 'Jogar').
+menuOptionDimensions(pt, 'Dimens\x00F5\es do tabuleiro').
 menuOptionSettings(pt, 'Idioma').
 menuOptionExit(pt, 'Sair').
 menuConfigurationsForPlayer(pt, 'CONFIGURA\x00C7\\x00D5\ES PARA O JOGADOR ~w').
