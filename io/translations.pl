@@ -24,6 +24,7 @@ menuChooseBotLevel(en, 'To choose a BOT type the level [~d-~d]').
 menuRandomBot(en, 'Level ~d is random').
 menuOneDigitFirstLine(en, 'If two digits are written, just the ').
 menuOneDigitSecondLine(en, 'first one will be considered').
+menuActualDimensions(en, 'The recomended dimension is ~d').
 
 % ----------------------------------------------------------------
 % Português
@@ -51,3 +52,5 @@ menuChooseBotLevel(pt, 'Para jogar como BOT digite o n\x00ED\vel [~d-~d]').
 menuRandomBot(pt, 'O n\x00ED\vel ~d \x00E9\ aleat\x00F3\rio').
 menuOneDigitFirstLine(pt, 'Se dois d\x00ED\gitos forem escritos, s\x00F3\ ').
 menuOneDigitSecondLine(pt, 'o primeiro ser\x00E1\ considerado').
+menuActualDimensions(pt, 'A dimens\x00E3\o recomendada \x00E9\ ~d').
+
