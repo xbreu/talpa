@@ -9,6 +9,7 @@ requestLevelOptionString(en, 'Choose a level [~d-~d] or type 0').
 requestTryAgainString(en, 'Try Again').
 indicatePlayerTurnString(en, 'Player ~s turn').
 indicateInvalidPieceString(en, 'That piece is not yours').
+indicateNoMovementsFromPieceString(en, 'That piece has no possible movements').
 indicateNoMovesString(en, 'No captures available, remove a piece').
 indicateInvalidDomainString(en, 'Value must be between [~w-~w]').
 indicateNotMemberString(en, 'Value must be one of ~w').
@@ -24,6 +25,7 @@ requestLevelOptionString(pt, 'Escolha um nível [~d-~d] ou digite 0').
 requestTryAgainString(pt, 'Tente Novamente').
 indicatePlayerTurnString(pt, 'Turno do jogador ~s').
 indicateInvalidPieceString(pt, 'Essa peça não é sua').
+indicateNoMovementsFromPieceString(pt, 'Não existem movimentos possíveis a partir desta peça').
 indicateNoMovesString(pt, 'Não existem capturas disponíveis, remova uma peça').
 indicateInvalidDomainString(pt, 'O valor deve pertencer ao intervalo [~w-~w]').
 indicateNotMemberString(pt, 'O valor deve ser um de ~w').
