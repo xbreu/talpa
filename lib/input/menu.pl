@@ -1,8 +1,10 @@
+:- consult('../text/input.pl').
 :-consult('input.pl').
 
 handle_main_menu(Level_X-Level_O) :-
-        display_main_menu, 
-        getInputInt('Choose a option [1-2] >> ', 1, 3, Option), 
+        display_main_menu,
+       	requestOption(1, 2),
+       	getIntInterval(1, 2, Option),
         handle_main_menu_options(Option, Level_X-Level_O).
 
 % to change. 
@@ -16,9 +18,11 @@ handle_main_menu_option(2, _):-
 
 handle_level_menu(Level_X-Level_O):-
         display_level_menu(1), 
-        getInputInt('Choose a level [1-9] or type 0 >>', 0 , 10, Level_X),
-        display_level_menu(2), 
-        getInputInt('Choose a level [1-9] or type 0 >>', 0 , 10, Level_O).
+        requestLevel(1, 9),
+        getIntInterval(0, 9, Level_X),
+        display_level_menu(2),
+        requestLevel(1, 9),
+	    getIntInterval(0, 9, Level_O).
 
 
 % ----------------------------------------------- 

@@ -121,8 +121,7 @@ choose_value_by_level(ValuesList, Level, Value):-
         length(ValuesList, Size),
         Pos is (Size + Level - 9), !,  
         NewPos is max(Pos, 1), 
-        nth1(NewPos, ValuesList, Value), 
-        write(Size).
+        nth1(NewPos, ValuesList, Value).
 
 % ----------------------------------------------- 
 %  Valuate        
