@@ -1,4 +1,5 @@
 :- use_module(library(lists)).
+:- consult('../board/cells.pl').
 :- consult('../utils.pl').
 :- consult('../variables.pl').
 
@@ -74,23 +75,3 @@ distinctPlayer(GameState, Line, Col, CaptureLine, CaptureCol):-
 	ActualPlayer \= CapturedPlayer, 
 	ActualPlayer \= 0,
 	CapturedPlayer\= 0.  
-	
-% -----------------------------------------------
-% Functions for validation of position
-% -----------------------------------------------
-
-% validPos(+Line, +Col).
-% Checks if the position if valid in a matrix.
-% +Line		: Line in matrix.
-% +Col 		: Column in matrix.
-validPos(Line, Col):-
-	validLine(Line),
-	validCol(Col).   
-
-validLine(Line):- 
-	numberOfLines(NumLines),
-	Line >= 0, Line < NumLines. 
-
-validCol(Col):- 
-	numberOfCols(NumCols), 
-	Col >= 0, Col < NumCols.
