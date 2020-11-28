@@ -1,29 +1,23 @@
-% -----------------------------------------------
-%  Move input
-% -----------------------------------------------
-requestInputRow :-
-	write('ROW >>').
+% ----------------------------------------------------------------
+% English
+% ----------------------------------------------------------------
+requestInputRowString(en, 'Row').
+requestInputColString(en, 'Col').
+requestInputDirString(en, 'Direction').
+indicatePlayerTurnString(en, 'Player ~s turn').
+indicateInvalidPieceString(en, 'That piece is not yours').
+indicateNoMovesString(en, 'No captures available, remove a piece').
+indicateInvalidInputString(en, 'Invalid Input').
+indicateInvalidDomainString(en, 'Value must be between [~d-~d]').
 
-requestInputCol :-
-	write('COL >>').
-
-requestInputDir :-
-	write('MOVE[wasd] >>').
-
-% -----------------------------------------------
-%  Information
-% -----------------------------------------------
-indicatePlayerTurn(Code) :-
-	format('--Player ~s turn--', Code), nl.
-
-indicateInvalidPiece :-
-	write('That piece is not yours!'), nl.
-
-indicateNoMoves :-
-	write('No captures available. Remove a piece'), nl.
-
-indicateInvalidInput() :-
-	write('Invalid input!!'), nl.
-
-indicateInvalidInput(Min, Max) :-
-	format('>Invalid input. Range must be [~d-~d].<', Min, Max), nl.
+% ----------------------------------------------------------------
+% Português
+% ----------------------------------------------------------------
+requestInputRowString(pt, 'Linha').
+requestInputColString(pt, 'Coluna').
+requestInputDirString(pt, 'Direção').
+indicatePlayerTurnString(pt, 'Turno do jogador ~s').
+indicateInvalidPieceString(pt, 'Essa peça não é sua').
+indicateNoMovesString(pt, 'Não existem capturas disponíveis, remova uma peça').
+indicateInvalidInputString(pt, 'Input inválido').
+indicateInvalidDomainString(pt, 'O valor deve pertencer ao intervalo [~d-~d]').

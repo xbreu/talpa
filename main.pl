@@ -9,6 +9,8 @@
 :- consult('lib/input/input.pl').
 :- consult('lib/input/menu.pl').
 
+language(en).
+
 % -----------------------------------------------
 %	Display game 
 % ----------------------------------------------- 
