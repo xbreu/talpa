@@ -13,8 +13,9 @@ handle_main_menu(Level_X-Level_O) :-
 
 handle_main_menu_options(1, Level) :- !,
 	handle_level_menu(Level).
-handle_main_menu_option(2, _):-
-	halt.
+handle_main_menu_options(2, Level):-
+	handle_settings_menu,
+	handle_main_menu(Level).
 handle_main_menu_option(3, _):-
 	halt.
 
