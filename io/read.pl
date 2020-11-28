@@ -1,13 +1,13 @@
-:- consult('../utils.pl').
-:- consult('../board/cells.pl').
-:- consult('../text/input.pl').
+:- consult('ask.pl').
+:- consult('../utils/utils.pl').
 :- consult('../variables.pl').
+:- consult('../board/cells.pl').
 
 % -----------------------------------------------
 % Read movement
 % -----------------------------------------------
 
-getMovement_r(Board, Player, Row, Column) :-
+getRemoveMovement(Board, Player, Row, Column) :-
 	indicatePlayerTurn(Player),
 	indicateToRemove,
 	getCell(Board, Player, Row, Column).

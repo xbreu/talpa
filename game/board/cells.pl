@@ -1,6 +1,6 @@
 :- use_module(library(between)).
 :- use_module(library(lists)).
-:- consult('../variables.pl').
+:- consult('../../variables.pl').
 
 % -----------------------------------------------
 % Functions for validation of position

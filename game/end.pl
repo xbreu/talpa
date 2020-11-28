@@ -1,6 +1,5 @@
-:- consult('../utils.pl').
+:- consult('../utils/utils.pl').
 :- consult('../variables.pl').
-:- consult('../text/victory.pl').
 
 % ----------------------------------------------------------------
 % Adjacent Cell
