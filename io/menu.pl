@@ -1,99 +1,139 @@
 :- consult('read.pl').
 :- consult('ask.pl').
+:- consult('../utils/utils.pl').
 
 handle_main_menu(Level_X-Level_O) :-
         display_main_menu,
        	requestOption(1, 2),
        	getIntInterval(1, 2, Option),
-        handle_main_menu_options(Option, Level_X-Level_O).
+        handle_main_menu_options(Option, Level_X-Level_O),
+        clear.
 
-% to change. 
-handle_main_menu_options(1, Level):- !,
-        handle_level_menu(Level). 
-        % call the game. 
-       
-% Exit 
+handle_main_menu_options(1, Level) :- !,
+        handle_level_menu(Level).
 handle_main_menu_option(2, _):-
         halt. 
 
 handle_level_menu(Level_X-Level_O):-
-        display_level_menu(1), 
+        display_level_menu(1),
         requestLevel(1, 9),
         getIntInterval(0, 9, Level_X),
         display_level_menu(2),
         requestLevel(1, 9),
 	    getIntInterval(0, 9, Level_O).
 
-
 % ----------------------------------------------- 
-% Main menu print
+% Main menu
 % -----------------------------------------------
-
 display_main_menu :-
-        display_main_title,
-        display_main_options. 
-
-display_main_title :-
-        menu_delimitation, nl,
-        menu_empty_line, nl,                              
-        write('|        _ __ ___     ___   _ __    _   _         |'     ), nl,
-        write('|       | \'_ ` _ \\   / _ \\ | \'_ \\  | | | |        |'), nl,
-        write('|       | | | | | | |  __/ | | | | | |_| |        |'     ), nl,
-        write('|       |_| |_| |_|  \\___| |_| |_|  \\__,_|        |'   ), nl,
-        menu_empty_line, nl,
-        menu_empty_line, nl,
-        menu_empty_line, nl.  
-
+        display_title(main),
+        display_main_options,
+        menu_delimitation_bottom.
 
 display_main_options :-
-        menu_empty_line, nl, 
         write('|              1) Play                            |'),nl,
-        write('|              2) Exit                            |'),nl, 
-        menu_empty_line                                             ,nl,
-        menu_delimitation                                           ,nl. 
+        write('|              2) Exit                            |'),nl.
         
 % ----------------------------------------------- 
 %  Level Menu        
-% ----------------------------------------------- 
-
+% -----------------------------------------------
 display_level_menu(Player) :-
-        display_level_title,
-        display_level_options(Player). 
+	display_title(level),
+	display_level_options(Player),
+	menu_delimitation_bottom.
 
-display_level_title :-
-        menu_delimitation, nl,
-        menu_empty_line, nl, 
-        write('|          _                         _            |        '),nl, 
-        write('|         | |                       | |           |        '),nl,        
-        write('|         | |   ___  __   __   ___  | |           |        '),nl,
-        write('|         | |  / _ \\ \\ \\ / /  / _ \\ | |           |    '),nl,
-        write('|         | | |  __/  \\ V /  |  __/ | |           |       '),nl,
-        write('|         |_|  \\___|   \\_/    \\___| |_|           |     '),nl,
-        menu_empty_line, nl,
-        menu_empty_line, nl,
-        menu_empty_line, nl.  
-   
 display_level_options(Player) :-
-        code(Player, Code), 
-        menu_empty_line, nl, 
-        format('|         CONFIGURATIONS FOR PLAYER ~w             |        ', Code),nl,
-        menu_empty_line, nl, 
-        write('|  - To play as HUMAN type 0.                     |        '),nl,
-        write('|  - To choose a BOT type the level [\'1-9\']       |        '),nl,
-        write('|  - If two digits are written, just the first    |        '),nl,
-        write('|    one will be considered                       |        '),nl, 
-        write('|  - The level 1 is the random level              |        '), nl,
+	code(Player, Code),
+	language(Language),
 
-        menu_empty_line, nl, 
-        menu_empty_line, nl, 
-        menu_delimitation, nl. 
+    menuConfigurationsForPlayer(Language, ConfigString),
+    menuPlayAsHuman(Language, HumanString),
+    menuChooseBotLevel(Language, BotString),
+    menuOneDigitFirstLine(Language, OneDigitString1),
+    menuOneDigitSecondLine(Language, OneDigitString2),
+    menuRandomBot(Language, RandomString),
 
+    formatToMenu(ConfigString, [Code]),
+    menu_empty_line,
+    formatToMenu(HumanString, [0]),
+    formatToMenu(BotString, [1, 9]),
+    formatToMenu(OneDigitString1),
+    formatToMenu('\x2502\    ', OneDigitString2, []),
+    formatToMenu(RandomString, [1]).
 
+% -----------------------------------------------
+% Normalize size of string
+% -----------------------------------------------
+createChars(0, _, '') :- !.
+createChars(N, C, Result) :-
+	N1 is N - 1,
+	createChars(N1, C, Aux),
+	atom_concat(C, Aux, Result).
+
+normalize(String, N, Normalizer, NormalizedString) :-
+	atom_length(String, L),
+	Right is N - L,
+	createChars(Right, Normalizer, RightString),
+	atom_concat(String, RightString, NormalizedString).
+
+formatToMenu(Start, End, Normalizer, String, List) :-
+	atom_chars(String, Chars),
+	ocurrenceOf(Chars, '~', X),
+	atom_length(Start, StartLength),
+	N is 50 + X - StartLength,
+	normalize(String, N, Normalizer, NewString),
+	atom_concat(Start, NewString, AuxResult),
+	atom_concat(AuxResult, End, Result),
+	format(Result, List).
+
+formatToMenu(Start, End, String, List) :-
+	formatToMenu(Start, End, ' ', String, List).
+
+formatToMenu(Start, String, List) :-
+	formatToMenu(Start, '\x2502\\n', String, List).
+
+formatToMenu(String, List) :-
+	formatToMenu('\x2502\  - ', String, List).
+
+formatToMenu(String) :-
+	formatToMenu('\x2502\  - ', String, []).
+
+% -----------------------------------------------
+% Titles
+% -----------------------------------------------
+display_title(Name) :-
+	menu_delimitation_top,
+	menu_empty_line,
+    write_title(Name),
+    menu_empty_line,
+    menu_empty_line,
+    menu_empty_line.
+
+write_title(level) :-
+	write('|          _                         _            |        '),nl,
+	write('|         | |                       | |           |        '),nl,
+	write('|         | |   ___  __   __   ___  | |           |        '),nl,
+	write('|         | |  / _ \\ \\ \\ / /  / _ \\ | |           |    '),nl,
+	write('|         | | |  __/  \\ V /  |  __/ | |           |       '),nl,
+	write('|         |_|  \\___|   \\_/    \\___| |_|           |     '),nl.
+
+write_title(main) :-
+	write('|        _ __ ___     ___   _ __    _   _         |'     ), nl,
+    write('|       | \'_ ` _ \\   / _ \\ | \'_ \\  | | | |        |'), nl,
+    write('|       | | | | | | |  __/ | | | | | |_| |        |'     ), nl,
+    write('|       |_| |_| |_|  \\___| |_| |_|  \\__,_|        |'   ), nl.
+
+% -----------------------------------------------
+% Menu delimitations
+% -----------------------------------------------
 menu_empty_line :-
-        write('|                                                 |'). 
+	formatToMenu('\x2502\', '', []).
 
-menu_delimitation :-
-        write('*-------------------------------------------------*'). 
+menu_delimitation_top :-
+	formatToMenu('\x250C\', '\x2510\\n', '\x2500\', '', []),
+	menu_empty_line.
 
-
+menu_delimitation_bottom :-
+	menu_empty_line,
+	formatToMenu('\x2514\', '\x2518\\n', '\x2500\', '', []).
 
