@@ -10,10 +10,10 @@ dynamic(language/1).
 % -----------------------------------------------
 
 % Determines the number of lines in the game
-numberOfLines(8).
+dynamic(numberOfLines/1).
 
 % Determines the number of columns in the game
-numberOfCols(8).
+dynamic(numberOfCols/1).
 
 % Size of padding on the board
 padding_size(1).

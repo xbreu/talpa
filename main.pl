@@ -23,6 +23,8 @@ make_move(GameState, Level, Player, NewGameState) :-
 	choose_move(GameState, Player, Level, NewGameState).
 
 play :-
+	assert(numberOfLines(8)),
+	assert(numberOfCols(8)),
 	assert(language(en)),
 	handle_main_menu(Level1-Level2),
 	initial(GameState),
