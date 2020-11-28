@@ -6,7 +6,7 @@
 :- consult('lib/game/valid_moves.pl').
 :- consult('lib/game/end.pl').
 :- consult('lib/game/bot.pl').
-:- consult('lib/input/input.pl').
+:- consult('lib/input/read.pl').
 :- consult('lib/input/menu.pl').
 
 % -----------------------------------------------

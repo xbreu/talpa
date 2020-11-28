@@ -1,5 +1,5 @@
+:- consult('read.pl').
 :- consult('../text/input.pl').
-:-consult('input.pl').
 
 handle_main_menu(Level_X-Level_O) :-
         display_main_menu,
