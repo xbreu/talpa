@@ -26,6 +26,7 @@ play :-
 	handle_main_menu(Level1-Level2),
 	initial(GameState),
 	play(GameState, Level1-Level2, 1).
+play.
 
 play(GameState, _, Player) :-
 	game_over(Player-GameState, Winner), !,
