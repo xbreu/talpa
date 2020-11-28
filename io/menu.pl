@@ -28,6 +28,13 @@ handle_level_menu(Level_X-Level_O):-
 	requestLevel(1, 9),
 	getIntInterval(0, 9, Level_O).
 
+handle_board_menu :-
+	display_board_menu,
+	requestOption(4, 9),
+	getIntInterval(4, 9, Selected), !,
+	asserta(numberOfCols(Selected)),
+	asserta(numberOfLines(Selected)).
+
 handle_settings_menu :-
 	findall(Code-Name, translation(Code, Name), Languages),
 	display_languages_menu(Languages),
@@ -85,6 +92,17 @@ display_level_options(Player) :-
     formatToMenu(OneDigitString1),
     formatToMenu('\x2502\    ', OneDigitString2, []),
     formatToMenu(RandomString, [1]).
+
+% -----------------------------------------------
+%  Level Menu
+% -----------------------------------------------
+display_board_menu :-
+	clear,
+	display_title(board),
+	language(Language),
+	menuActualDimensions(Language, DimensionString),
+	formatToMenu(DimensionString, [8]),
+	menu_delimitation_bottom.
 
 % -----------------------------------------------
 %  Languages Menu
