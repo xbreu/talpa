@@ -1,6 +1,7 @@
 % ----------------------------------------------------------------
 % English
 % ----------------------------------------------------------------
+translation(1, en).
 requestInputRowString(en, 'Row').
 requestInputColString(en, 'Col').
 requestInputDirString(en, 'Direction').
@@ -14,7 +15,7 @@ indicateNoMovesString(en, 'No captures available, remove a piece').
 indicateInvalidDomainString(en, 'Value must be between [~w-~w]').
 indicateNotMemberString(en, 'Value must be one of ~w').
 menuOptionPlay(en, 'Play').
-menuOptionSettings(en, 'Settings').
+menuOptionSettings(en, 'Language').
 menuOptionExit(en, 'Exit').
 menuConfigurationsForPlayer(en, 'CONFIGURATIONS FOR PLAYER ~w').
 menuPlayAsHuman(en, 'To play as HUMAN type ~d').
@@ -26,6 +27,7 @@ menuOneDigitSecondLine(en, 'first one will be considered').
 % ----------------------------------------------------------------
 % Português
 % ----------------------------------------------------------------
+translation(2, pt).
 requestInputRowString(pt, 'Linha').
 requestInputColString(pt, 'Coluna').
 requestInputDirString(pt, 'Dire\x00E7\\x00E3\o').
@@ -39,7 +41,7 @@ indicateNoMovesString(pt, 'N\x00E3\o existem capturas dispon\x00ED\veis, remova 
 indicateInvalidDomainString(pt, 'O valor deve pertencer ao intervalo [~w-~w]').
 indicateNotMemberString(pt, 'O valor deve ser um de ~w').
 menuOptionPlay(pt, 'Jogar').
-menuOptionSettings(pt, 'Defini\x00E7\\x00F5\es').
+menuOptionSettings(pt, 'Idioma').
 menuOptionExit(pt, 'Sair').
 menuConfigurationsForPlayer(pt, 'CONFIGURA\x00C7\\x00D5\ES PARA O JOGADOR ~w').
 menuPlayAsHuman(pt, 'Para jogar como HUMANO digite ~d').

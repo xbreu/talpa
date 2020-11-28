@@ -7,7 +7,7 @@ handle_main_menu(Level_X-Level_O) :-
 	clear,
     display_main_menu,
     requestOption(1, 3),
-    getIntInterval(1, 3, Option),
+    getIntInterval(1, 3, Option), !,
     handle_main_menu_options(Option, Level_X-Level_O),
     clear.
 
@@ -17,6 +17,7 @@ handle_main_menu_options(2, Level):-
 	handle_settings_menu,
 	handle_main_menu(Level).
 handle_main_menu_option(3, _):-
+	print(a),
 	halt.
 
 handle_level_menu(Level_X-Level_O):-
@@ -26,6 +27,12 @@ handle_level_menu(Level_X-Level_O):-
 	display_level_menu(2),
 	requestLevel(1, 9),
 	getIntInterval(0, 9, Level_O).
+
+handle_settings_menu :-
+	requestOption(1, 2),
+	getIntInterval(1, 2, Selected),
+	translation(Selected, Language),
+	asserta(language(Language)).
 
 % ----------------------------------------------- 
 % Main menu
