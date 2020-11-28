@@ -4,10 +4,9 @@
 %  Init game 	
 % -----------------------------------------------
 
-% To change the size of the board, change the values of this function
 initial(GameState):-
 	numberOfLines(Lines), 
-	numberOfCols(Cols), 
+	numberOfCols(Cols),
 	initial(GameState, Lines, Cols).
 
 % -[Line|State] : GameState.
