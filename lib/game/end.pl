@@ -1,5 +1,5 @@
-:- consult('../variables.pl').
 :- consult('../utils.pl').
+:- consult('../variables.pl').
 :- consult('../text/victory.pl').
 
 % ----------------------------------------------------------------
@@ -102,6 +102,3 @@ game_over(Player-Board, Player) :-
 game_over(Player-Board, Player) :-
 	vertical_player(Player),
 	game_over_vertical(Board).
-
-print_winner(1) :- display_x_wins.
-print_winner(2) :- display_o_wins.
