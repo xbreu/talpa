@@ -3,7 +3,7 @@
 % -----------------------------------------------
 
 % Determines the language of the text.
-language(en).
+dynamic(language/1).
 
 % -----------------------------------------------
 % Board variables

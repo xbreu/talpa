@@ -23,6 +23,7 @@ make_move(GameState, Level, Player, NewGameState) :-
 	choose_move(GameState, Player, Level, NewGameState).
 
 play :-
+	assert(language(en)),
 	handle_main_menu(Level1-Level2),
 	initial(GameState),
 	play(GameState, Level1-Level2, 1).
