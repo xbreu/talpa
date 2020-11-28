@@ -2,24 +2,60 @@
 :- consult('../text/input.pl').
 :- consult('../variables.pl').
 
-charToInt(Char, Value) :-
-	char_code(Char, ValueASCII),
-    Value is ValueASCII - 48.
+% -----------------------------------------------
+% Read movement
+% -----------------------------------------------
+
+getMovement(Board, Player, Row, Column, Direction) :-
+	indicatePlayerTurn(Player),
+	getCell(Board, Player, RawRow, RawCol),
+	getDirection([w, a, s, d], Direction),
+	getRealInput(RawRow, RawCol, Row, Column).
+
+getMovement_r(Board, Player, Row, Column) :-
+	indicatePlayerTurn(Player),
+	indicateToRemove,
+	getCell(Board, Player, RawRow, RawCol),
+	getRealInput(RawRow, RawCol, Row, Column).
+getDirection(Valid, Direction) :-
+	requestDirection,
+	getCharOptions(Valid, Direction).
+
+getDirection(Valid, Direction) :-
+	indicateNotMember(Valid),
+	requestAfterInvalid,
+	getDirection(Valid, Direction).
 
 % -----------------------------------------------
-% Read Characters
+% Read cell
 % -----------------------------------------------
-readChar(Char) :-
-	get_char(Char),
-    skip_line.
 
-readDigit(Value) :-
-	readChar(ValueChar),
-	charToInt(ValueChar, Value).
+readRow(Row) :-
+	numberOfLines(Max),
+	requestRow,
+	getIntInterval(1, Max, Row).
+
+readCol(Col) :-
+	numberOfCols(MaxCols),
+	Code is MaxCols + 96,
+	char_code(Max, Code),
+	requestCol,
+	getCharInterval('a', Max, Col).
+
+getCell(Board, Player, Row, Col) :-
+	readRow(Row),
+	readCol(Col),
+	getValueInMatrix(Board, Row, Col, Player), !.
+
+getCell(Board, Player, Row, Col) :-
+	indicateInvalidPiece,
+	requestAfterInvalid,
+	getCell(Board, Player, Row, Col).
 
 % -----------------------------------------------
 % Read Values
 % -----------------------------------------------
+
 getIntInterval(Min, Max, Value) :-
 	readDigit(Value),
 	between(Min, Max, Value), !.
@@ -51,57 +87,25 @@ getCharOptions(Options, Value) :-
 	getCharOptions(Options, Value).
 
 % -----------------------------------------------
-% Read cell
+% Read Characters
 % -----------------------------------------------
-readRow(Row) :-
-	numberOfLines(Max),
-	requestRow,
-	getIntInterval(1, Max, Row).
 
-readCol(Col) :-
-	numberOfCols(MaxCols),
-	Code is MaxCols + 96,
-	char_code(Max, Code),
-	requestCol,
-	getCharInterval('a', Max, Col).
+readChar(Char) :-
+	get_char(Char),
+    skip_line.
 
-getCell(Board, Player, Row, Col) :-
-	readRow(Row),
-	readCol(Col),
-	getValueInMatrix(Board, Row, Col, Player), !.
+readDigit(Value) :-
+	readChar(ValueChar),
+	charToInt(ValueChar, Value).
 
-getCell(Board, Player, Row, Col) :-
-	indicateInvalidPiece,
-	requestAfterInvalid,
-	getCell(Board, Player, Row, Col).
-
-% -----------------------------------------------
-% Read movement
-% -----------------------------------------------
-getDirection(Valid, Direction) :-
-	requestDirection,
-	getCharOptions(Valid, Direction).
-
-getDirection(Valid, Direction) :-
-	indicateNotMember(Valid),
-	requestAfterInvalid,
-	getDirection(Valid, Direction).
-
-getMovement(Board, Player, Row, Column, Direction) :-
-	indicatePlayerTurn(Player),
-	getCell(Board, Player, RawRow, RawCol),
-	getDirection([w, a, s, d], Direction),
-	getRealInput(RawRow, RawCol, Row, Column).
-
-getMovement_r(Board, Player, Row, Column) :-
-	indicatePlayerTurn(Player),
-	indicateToRemove,
-	getCell(Board, Player, RawRow, RawCol),
-	getRealInput(RawRow, RawCol, Row, Column).
+charToInt(Char, Value) :-
+	char_code(Char, ValueASCII),
+    Value is ValueASCII - 48.
 
 % -----------------------------------------------
 % Get real input
 % -----------------------------------------------
+
 getRealInput(Line, Col, RealLine, RealCol):-
 	getRealLine(Line, RealLine), 
 	getRealCol(Col, RealCol).
