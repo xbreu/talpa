@@ -6,23 +6,25 @@
 handle_main_menu(Level_X-Level_O) :-
 	clear,
     display_main_menu,
-    requestOption(1, 2),
-    getIntInterval(1, 2, Option),
+    requestOption(1, 3),
+    getIntInterval(1, 3, Option),
     handle_main_menu_options(Option, Level_X-Level_O),
     clear.
 
 handle_main_menu_options(1, Level) :- !,
-        handle_level_menu(Level).
+	handle_level_menu(Level).
 handle_main_menu_option(2, _):-
-        halt. 
+	halt.
+handle_main_menu_option(3, _):-
+	halt.
 
 handle_level_menu(Level_X-Level_O):-
-        display_level_menu(1),
-        requestLevel(1, 9),
-        getIntInterval(0, 9, Level_X),
-        display_level_menu(2),
-        requestLevel(1, 9),
-	    getIntInterval(0, 9, Level_O).
+	display_level_menu(1),
+	requestLevel(1, 9),
+	getIntInterval(0, 9, Level_X),
+	display_level_menu(2),
+	requestLevel(1, 9),
+	getIntInterval(0, 9, Level_O).
 
 % ----------------------------------------------- 
 % Main menu
