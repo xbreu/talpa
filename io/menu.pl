@@ -4,20 +4,17 @@
 :- consult('../utils/utils.pl').
 
 handle_main_menu(Level_X-Level_O) :-
-	clear,
     display_main_menu,
     requestOption(1, 3),
     getIntInterval(1, 3, Option), !,
-    handle_main_menu_options(Option, Level_X-Level_O),
-    clear.
+    handle_main_menu_options(Option, Level_X-Level_O).
 
-handle_main_menu_options(1, Level) :- !,
+handle_main_menu_options(1, Level) :-
 	handle_level_menu(Level).
 handle_main_menu_options(2, Level):-
 	handle_settings_menu,
 	handle_main_menu(Level).
 handle_main_menu_option(3, _):-
-	print(a),
 	halt.
 
 handle_level_menu(Level_X-Level_O):-
@@ -29,18 +26,22 @@ handle_level_menu(Level_X-Level_O):-
 	getIntInterval(0, 9, Level_O).
 
 handle_settings_menu :-
-	requestOption(1, 2),
-	getIntInterval(1, 2, Selected),
-	translation(Selected, Language),
-	asserta(language(Language)).
+	findall(Code-Name, translation(Code, Name), Languages),
+	display_languages_menu(Languages),
+	length(Languages, Size),
+	requestOption(1, Size),
+	getIntInterval(1, Size, Selected), !,
+	nth1(Selected, Languages, Code-_),
+	asserta(language(Code)).
 
 % ----------------------------------------------- 
 % Main menu
 % -----------------------------------------------
 display_main_menu :-
-        display_title(main),
-        display_main_options,
-        menu_delimitation_bottom.
+	clear,
+	display_title(main),
+	display_main_options,
+    menu_delimitation_bottom.
 
 display_main_options :-
 	language(Language),
@@ -55,6 +56,7 @@ display_main_options :-
 %  Level Menu        
 % -----------------------------------------------
 display_level_menu(Player) :-
+	clear,
 	display_title(level),
 	display_level_options(Player),
 	menu_delimitation_bottom.
@@ -77,6 +79,21 @@ display_level_options(Player) :-
     formatToMenu(OneDigitString1),
     formatToMenu('\x2502\    ', OneDigitString2, []),
     formatToMenu(RandomString, [1]).
+
+% -----------------------------------------------
+%  Languages Menu
+% -----------------------------------------------
+display_languages_menu([], _).
+display_languages_menu([_-Head | Tail], N) :-
+	formatToMenu('\x2502\       ~d) ', '\x2502\\n', ' ', 51, Head, [N]),
+	N1 is N + 1,
+	display_languages_menu(Tail, N1).
+
+display_languages_menu(Languages) :-
+	clear,
+	display_title(language),
+	display_languages_menu(Languages, 1),
+	menu_delimitation_bottom.
 
 % -----------------------------------------------
 % Normalize size of string
@@ -103,15 +120,18 @@ normalize(String, N, Normalizer, NormalizedString) :-
 	createChars(Right, Normalizer, RightString),
 	atom_concat(String, RightString, NormalizedString).
 
-formatToMenu(Start, End, Normalizer, String, List) :-
+formatToMenu(Start, End, Normalizer, Size, String, List) :-
 	atom_chars(String, Chars),
 	ocurrenceOf(Chars, '~', X),
 	atom_length(Start, StartLength),
-	N is 50 + X - StartLength,
+	N is Size + X - StartLength,
 	normalize(String, N, Normalizer, NewString),
 	atom_concat(Start, NewString, AuxResult),
 	atom_concat(AuxResult, End, Result),
 	format(Result, List).
+
+formatToMenu(Start, End, Normalizer, String, List) :-
+	formatToMenu(Start, End, Normalizer, 50, String, List).
 
 formatToMenu(Start, End, String, List) :-
 	formatToMenu(Start, End, ' ', String, List).

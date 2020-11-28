@@ -1,7 +1,7 @@
 % ----------------------------------------------------------------
 % English
 % ----------------------------------------------------------------
-translation(1, en).
+translation(en, 'English').
 requestInputRowString(en, 'Row').
 requestInputColString(en, 'Col').
 requestInputDirString(en, 'Direction').
@@ -27,7 +27,7 @@ menuOneDigitSecondLine(en, 'first one will be considered').
 % ----------------------------------------------------------------
 % Português
 % ----------------------------------------------------------------
-translation(2, pt).
+translation(pt, 'Portugu\x00EA\s').
 requestInputRowString(pt, 'Linha').
 requestInputColString(pt, 'Coluna').
 requestInputDirString(pt, 'Dire\x00E7\\x00E3\o').
