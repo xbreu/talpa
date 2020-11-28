@@ -53,4 +53,3 @@ menuRandomBot(pt, 'O n\x00ED\vel ~d \x00E9\ aleat\x00F3\rio').
 menuOneDigitFirstLine(pt, 'Se dois d\x00ED\gitos forem escritos, s\x00F3\ ').
 menuOneDigitSecondLine(pt, 'o primeiro ser\x00E1\ considerado').
 menuActualDimensions(pt, 'A dimens\x00E3\o recomendada \x00E9\ ~d').
-
