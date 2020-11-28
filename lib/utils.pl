@@ -11,3 +11,6 @@ random_list(List, Element) :-
         length(List, X),
         random(0, X, R),
         nth0(R, List, Element).
+
+swap_players(Player, OtherPlayer) :-
+	OtherPlayer is Player mod 2 + 1.

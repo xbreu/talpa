@@ -75,6 +75,13 @@ indicateNotMember(Options) :-
     format(String, [Options]),
     indicationAfter.
 
+indicateNoMovementsFromPiece :-
+	language(Language),
+    indicateNoMovementsFromPieceString(Language, String),
+    indicationBefore,
+    write(String),
+    indicationAfter.
+
 indicateInvalidPiece :-
 	language(Language),
 	indicateInvalidPieceString(Language, PieceString),
