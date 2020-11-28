@@ -1,13 +1,15 @@
 :- consult('read.pl').
 :- consult('ask.pl').
+:- consult('titles.pl').
 :- consult('../utils/utils.pl').
 
 handle_main_menu(Level_X-Level_O) :-
-        display_main_menu,
-       	requestOption(1, 2),
-       	getIntInterval(1, 2, Option),
-        handle_main_menu_options(Option, Level_X-Level_O),
-        clear.
+	clear,
+    display_main_menu,
+    requestOption(1, 2),
+    getIntInterval(1, 2, Option),
+    handle_main_menu_options(Option, Level_X-Level_O),
+    clear.
 
 handle_main_menu_options(1, Level) :- !,
         handle_level_menu(Level).
@@ -31,8 +33,13 @@ display_main_menu :-
         menu_delimitation_bottom.
 
 display_main_options :-
-        write('|              1) Play                            |'),nl,
-        write('|              2) Exit                            |'),nl.
+	language(Language),
+	menuOptionPlay(Language, OptionPlay),
+	menuOptionSettings(Language, OptionSettings),
+	menuOptionExit(Language, OptionExit),
+	formatToMenu('\x2502\       1) ', OptionPlay, []),
+	formatToMenu('\x2502\       2) ', OptionSettings, []),
+	formatToMenu('\x2502\       3) ', OptionExit, []).
         
 % ----------------------------------------------- 
 %  Level Menu        
@@ -69,6 +76,16 @@ createChars(N, C, Result) :-
 	N1 is N - 1,
 	createChars(N1, C, Aux),
 	atom_concat(C, Aux, Result).
+
+centralize(String, N, Normalizer, NormalizedString) :-
+	atom_length(String, L),
+	Dif is N - L,
+	Right is Dif // 2 + Dif mod 2,
+	Left is Dif // 2,
+	createChars(Right, Normalizer, RightString),
+	createChars(Left, Normalizer, LeftString),
+	atom_concat(String, RightString, NormalizedStringAux),
+	atom_concat(LeftString, NormalizedStringAux, NormalizedString).
 
 normalize(String, N, Normalizer, NormalizedString) :-
 	atom_length(String, L),
@@ -109,19 +126,19 @@ display_title(Name) :-
     menu_empty_line,
     menu_empty_line.
 
-write_title(level) :-
-	write('|          _                         _            |        '),nl,
-	write('|         | |                       | |           |        '),nl,
-	write('|         | |   ___  __   __   ___  | |           |        '),nl,
-	write('|         | |  / _ \\ \\ \\ / /  / _ \\ | |           |    '),nl,
-	write('|         | | |  __/  \\ V /  |  __/ | |           |       '),nl,
-	write('|         |_|  \\___|   \\_/    \\___| |_|           |     '),nl.
+write_lines(List) :-
+	member(X, List),
+	centralize(X, 49, ' ', ToWrite),
+	write('\x2502\'),
+	write(ToWrite),
+	write('\x2502\'), nl,
+	fail.
 
-write_title(main) :-
-	write('|        _ __ ___     ___   _ __    _   _         |'     ), nl,
-    write('|       | \'_ ` _ \\   / _ \\ | \'_ \\  | | | |        |'), nl,
-    write('|       | | | | | | |  __/ | | | | | |_| |        |'     ), nl,
-    write('|       |_| |_| |_|  \\___| |_| |_|  \\__,_|        |'   ), nl.
+write_lines(_).
+
+write_title(Name) :-
+	title(Name, List),
+	write_lines(List).
 
 % -----------------------------------------------
 % Menu delimitations
