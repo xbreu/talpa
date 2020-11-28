@@ -1,5 +1,13 @@
 :- consult('../variables.pl').
-:- consult('../utils.pl').
+:- consult('../utils/utils.pl').
+
+% -----------------------------------------------
+%	Display game
+% -----------------------------------------------
+
+display_game(GameState, Player) :-
+	print_board(GameState),
+	nl.
 
 % -----------------------------------------------
 % Board matrix construction

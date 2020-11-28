@@ -1,4 +1,4 @@
-:- consult('../variables.pl').
+:- consult('../../variables.pl').
 
 % ----------------------------------------------- 
 %  Init game 	
