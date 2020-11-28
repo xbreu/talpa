@@ -1,3 +1,4 @@
+:- use_module(library(between)).
 :- use_module(library(lists)).
 :- consult('../variables.pl').
 
@@ -5,7 +6,7 @@
 % Functions for validation of position
 % -----------------------------------------------
 
-% validPos(+Line, +Col).
+% validPos(+LineCol).
 % Checks if the position if valid in a matrix.
 % +Line		: Line in matrix.
 % +Col 		: Column in matrix.
@@ -15,11 +16,13 @@ validPos(Line, Col):-
 
 validLine(Line):-
 	numberOfLines(NumLines),
-	Line >= 0, Line < NumLines.
+	Max is NumLines - 1,
+	between(0, Max, Line).
 
 validCol(Col):-
 	numberOfCols(NumCols),
-	Col >= 0, Col < NumCols.
+	Max is NumCols - 1,
+	between(0, Max, Col).
 
 % -----------------------------------------------
 % Matrix functions
