@@ -47,8 +47,7 @@ __Nota__: As peças do tabuleiro não precisam ser necessariamente pretas e bran
 - Inicial:   
 ![](img/initial.png)
 
-- Intermédio:   
-  
+- Intermédio:
 ![](img/middle.png)
 
 - Final:   
@@ -76,7 +75,7 @@ Ao chegar na última linha a ser impressa a função `print_middle_matrix` irá 
 #### Menu inicial:
 O menu inicial contém 4 campos: Play, Board Dimensions, Language e Exit.  
 Caso o usuário insira um número fora do indicado, será pedido para que o usuário tente inserir uma opção válida novamente. No entanto, se o usuário digitar mais de um carácter, apenas o primeiro será considerado e o restante do input será descartado.   
-![](img/menu.png)
+![](img/menu.png)  
 ![](img/language.png)
 
 #### Escolha dos niveis e modalidade de jogo: 
