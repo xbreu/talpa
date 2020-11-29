@@ -47,7 +47,7 @@ __Nota__: As peças do tabuleiro não precisam ser necessariamente pretas e bran
 - Inicial:   
 ![](img/initial.png)
 
-- Intermédio:
+- Intermédio:  
 ![](img/middle.png)
 
 - Final:   
