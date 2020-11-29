@@ -1,4 +1,4 @@
-:- consult('utils.pl'). 
+:- consult('../utils/utils.pl').
 :- consult('valid_moves.pl'). 
 
 get_valid_adjacent(Board, Col-Row, Visited, AdjCol-AdjRow) :-
@@ -58,7 +58,7 @@ calculate_path(Board, Cell, Visited, ExtremeValues) :-
 find_biggest_lines(_, _, Visited, 0-0) :-
 	numberOfCols(C),
 	numberOfLines(L),
-	len(Visited, V),
+	length(Visited, V),
 	V is C * L, !.
 
 find_biggest_lines(Board, LastCell, Visited, ResultCol-ResultRow) :-
@@ -78,16 +78,13 @@ get_all_values(Board, HorizontalValue, VerticalValue) :-
 %  Choose move         
 % -----------------------------------------------
 
-/*
- Choose a move for the pc according to the level. 
-
- choose_move(+GameState, +Player, +Level, -Move). 
- +GameState     : Current board of the game. 
- +Player        : Current player. 
- +Level         : Difficulty level. 
- -Move          : The move chosen randomly, but according to the level.
-*/  
-
+% Choose a move for the pc according to the level.
+%
+% choose_move(+GameState, +Player, +Level, -Move).
+% +GameState     : Current board of the game.
+% +Player        : Current player.
+% +Level         : Difficulty level.
+% -Move          : The move chosen randomly, but according to the level.
 choose_move(GameState, Player, 1, Move):-
         valid_moves(GameState, Player, ListOfMoves),   
         random_list(ListOfMoves, Move), !. 
@@ -100,15 +97,12 @@ choose_move(GameState, Player, Level, Move):- !,
         choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList),                                                 % list of moves with value chosen in the previous line
         random_list(MovesList, Move).                                                                                   % choose state by the value, randomly
 
-
-/*
- Get a list of moves with a specific value.
- 
- choose_moves_by_value(+ValuesMovesList, +ValueChosen, -MovesList). 
- +ValuesMovesList       : List with all possible moves and its values. 
- +ValueChosen           : Lists with this value will be selected. 
- -MovesList             : List of moves with the given value. 
-*/ 
+% Get a list of moves with a specific value.
+%
+% choose_moves_by_value(+ValuesMovesList, +ValueChosen, -MovesList).
+% +ValuesMovesList       : List with all possible moves and its values.
+% +ValueChosen           : Lists with this value will be selected.
+% -MovesList             : List of moves with the given value.
 choose_moves_by_value([], _, []). 
 choose_moves_by_value([Value-Move|ValuesMovesList], ValueChosen, [Move|MovesList]):-
         Value == ValueChosen, 
@@ -117,37 +111,27 @@ choose_moves_by_value([Value-Move|ValuesMovesList], ValueChosen, [Move|MovesList
 choose_moves_by_value([Value-_|ValuesMovesList], ValueChosen, MovesList):- 
         Value \= ValueChosen, 
         choose_moves_by_value(ValuesMovesList, ValueChosen, MovesList). 
-          
-/*
- From the values give, choose the Level th value from the list of values. If Level > values.size, the the chosen value will be the last element from the list.
 
- choose_value_by_level(+ValuesList, +Level, -Value).  
- +ValuesList            : Set of values. 
- +Level                 : Level chosen. 
- -Value                 : Retrieved value. 
-*/                                                  
+% From the values give, choose the Level th value from the list of values. If Level > values.size, the the chosen value will be the last element from the list.
+% choose_value_by_level(+ValuesList, +Level, -Value).
+% +ValuesList            : Set of values.
+% +Level                 : Level chosen.
+% -Value                 : Retrieved value.
 choose_value_by_level(ValuesList, Level, Value):-
-        len(ValuesList, Size),  
+        length(ValuesList, Size),
         Pos is (Size + Level - 9), !,  
         NewPos is max(Pos, 1), 
-        nth1(NewPos, ValuesList, Value), 
-        write(Size). 
-        
-
-
+        nth1(NewPos, ValuesList, Value).
 
 % ----------------------------------------------- 
 %  Valuate        
 % -----------------------------------------------
-/* 
- Value of the GameState. Formula: sizeOfPathHorizontal*NumCellsInPath - sizeOfPathVertical*NumCellsInPath
 
- value(+GameState, +Player, -Value).
- +GameState     : Actual board state. 
- +Player        : Number of the actual player 1 or 2. 
- +Value         : Value of the board.        
-*/
-
+% Value of the GameState. Formula: sizeOfPathHorizontal*NumCellsInPath - sizeOfPathVertical*NumCellsInPath
+% value(+GameState, +Player, -Value).
+% +GameState     : Actual board state.
+% +Player        : Number of the actual player 1 or 2.
+% +Value         : Value of the board.
 value(GameState, Player, Value):-
         horizontal_player(Player),
        	get_all_values(GameState, HorizontalValue, VerticalValue),
@@ -162,15 +146,12 @@ value(GameState, Player, Value):-
 %  Orthogonal length        
 % -----------------------------------------------
 
-/*
- Get's the honrizontal length of a path. 
-
- orthogonal_row_length([+StartCol, +StartLine], +Board, -NumCells).
- +StartCol      : Col where the path starts. 
- +StartLine     : Line where the path starts. 
- +Board         : GameState. 
- -NumCells      : Horizontal length in cells measure. 
-*/ 
+% Get's the honrizontal length of a path.
+% orthogonal_row_length([+StartCol, +StartLine], +Board, -NumCells).
+% +StartCol      : Col where the path starts.
+% +StartLine     : Line where the path starts.
+% +Board         : GameState.
+% -NumCells      : Horizontal length in cells measure.
 orthogonal_row_length([StartCol, StartLine], Board, NumCells):-
         can_visit_adjacent([StartCol, StartLine], [], Board),
         orthogonal_row_length([StartCol, StartLine], Board, [], NumCells, 1), !. 
@@ -198,17 +179,12 @@ orthogonal_row_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells
 % If no other cell can be visit, ends the recursion. 
 orthogonal_row_length([_, _], _, _, NumCells, NumCells). 
 
-
-
-/*
- Get's the Vertical length of a path. 
-
- orthogonal_col_length([+StartCol, +StartLine], +Board, -NumCells).
- +StartCol      : Col where the path starts. 
- +StartLine     : Line where the path starts. 
- +Board         : GameState. 
- -NumCells      : Vertical length in cells measure. 
-*/ 
+% Get's the Vertical length of a path.
+% orthogonal_col_length([+StartCol, +StartLine], +Board, -NumCells).
+% +StartCol      : Col where the path starts.
+% +StartLine     : Line where the path starts.
+% +Board         : GameState.
+% -NumCells      : Vertical length in cells measure.
 orthogonal_col_length([StartCol, StartLine], Board, NumCells):-
         can_visit_adjacent([StartCol, StartLine], [], Board),
         orthogonal_col_length([StartCol, StartLine], Board, [], NumCells, 1), !. 
@@ -217,7 +193,6 @@ orthogonal_col_length([StartCol, StartLine], Board, NumCells):-
 orthogonal_col_length([CurrCol, CurrLine], Board, 0):-                  
         \+can_visit_adjacent([CurrCol, CurrLine], [], Board). 
 
-     
 % The next cell we can visit adds an horizontal cell. 
 orthogonal_col_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells):-
         adjacent_cell([CurrCol, CurrLine], [NewCol, NewLine]),
@@ -236,9 +211,7 @@ orthogonal_col_length([CurrCol, CurrLine], Board, Visited, NumCells, AccNumCells
 % If no other cell can be visit, ends the recursion. 
 orthogonal_col_length([_, _], _, _, NumCells, NumCells). 
 
-/*
- A cell can be visited if wasn't visited 
-*/ 
+% A cell can be visited if wasn't visited
 can_visit_adjacent([CurrCol, CurrLine], Visited, Board):-
         \+member([CurrCol, CurrLine], Visited),                                  % Isnt visited yet 
         getValueInMatrix(Board, CurrLine, CurrCol, 0).                           % Check if it's 0     
