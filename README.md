@@ -45,14 +45,14 @@ __Nota__: As peças do tabuleiro não precisam ser necessariamente pretas e bran
 
 ### Estados Possíveis de Jogo:
 - Inicial:   
-![](https://i.imgur.com/d8kEZDO.png)
+![](img/initial.png)
 
 - Intermédio:   
   
-![](https://i.imgur.com/E2yvkmE.png)
+![](img/middle.png)
 
 - Final:   
-![](https://i.imgur.com/03epnFw.png)
+![](img/win.png)
 
 ## Visualização do estado do jogo
 
@@ -74,17 +74,17 @@ Ao chegar na última linha a ser impressa a função `print_middle_matrix` irá 
 ### Menus
 
 #### Menu inicial:
-O menu inicial contém apenas 2 fields: Play ou Exit.  
-Caso o usuário insira um número fora do indicado (1 ou 2), será pedido para que o usuário tente inserir uma opção válida novamente. No entanto, se o usuário digitar mais de um carácter, apenas o primeiro será considerado e o restante do input será descartado.   
-![](https://i.imgur.com/nsiNFaA.png)
+O menu inicial contém 4 campos: Play, Board Dimensions, Language e Exit.  
+Caso o usuário insira um número fora do indicado, será pedido para que o usuário tente inserir uma opção válida novamente. No entanto, se o usuário digitar mais de um carácter, apenas o primeiro será considerado e o restante do input será descartado.   
+![](img/menu.png)
+![](img/language.png)
 
 #### Escolha dos niveis e modalidade de jogo: 
 Em sequência a escolha `play` no menu inicial, serão apresentados dois menus: um para as configurações do jogador `x` e outro para o jogador `o`.   
 Para cada jogador há duas possibilidades de input:
 - Se o usuário digitar o número 0, o player em questão será considerado um humano.   
 - Caso contrário, deve-se digitar um número entre 1 e 9, o qual será o nível de dificuldade imposto ao bot.  
-![](https://i.imgur.com/WuxTTxa.png)
-![](https://i.imgur.com/hJX374r.png)
+![](img/level.png)
 
 ## Lista de Jogadas Válidas
 
