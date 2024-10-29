@@ -5,7 +5,7 @@
 - __Grupo__: 3  
 - __Turma Prática__: 3MIEIC06
 - __Elementos__: 
-    - Alexandre Almeida de Abreu Filho (up201800168)
+    - Alexandre Abreu (up201800168)
     - Juliane de Lima Marubayashi (up201800175)
 
 ## Instalação
